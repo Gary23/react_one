@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2_使用js创建虚拟DOM</title>
+</head>
+<body>
+  <div id="test"></div>
+  <!-- 引入 react_development.js   react-dom.development.js  babel.min.js -->
+  <script type="text/javascript">
+    // 用js创建和 1_jsx创建虚拟dom 一样的虚拟Dom
+    // const VDOM = React.createElement(标签名, 标签属性, 标签内容)
+    const VDOM_JS = React.createElement('h1', {id: "title"}, React.createElement('span', {}, 'Hello,React'));
+    // 最终 1_jsx创建虚拟dom 的jsx写法也会被babel编译为上面的这种js的写法，所以jsx也可以额看做是js的一个语法糖
+    // ！！！ jsx的优势，js创建虚拟dom太繁琐，jsx更贴近html的写法 ！！！
+    // 
+    ReachDOM.render(VDOM_JS, document.getElementById('#test'))
+  </script>
+</body>
+</html>

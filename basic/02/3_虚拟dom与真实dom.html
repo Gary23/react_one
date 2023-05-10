@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2_使用jsx创建虚拟DOM</title>
+</head>
+<body>
+  <div id="test"></div>
+
+  <div id="demo"></div>
+  <!-- 引入 react_development.js   react-dom.development.js  babel.min.js -->
+  <!-- 此处一定要写text/babel  为了让babel编译 -->
+  <script type="text/babel">
+    // 1. 创建虚拟dom
+      // 此处不是字符串是虚拟dom  所以直接写标签
+    const VDOM = (
+      <h1 id="title">
+        <span>Hello, React</span>  
+      </h1>
+    )
+
+    const tDOM = document.getElementById('demo')
+
+
+    // 2. 渲染虚拟dom到页面   ReachDOM.render(虚拟DOm, 容器)
+    ReachDOM.render(VDOM, document.getElementById('test'))
+
+    console.log('虚拟DOM', VDOM);   // 输出一个对象
+    console.log('真实DOM', tDOM);   
+    debugger
+    // console.log(VDOM instanceof Object);   // true
+    /**
+     * 关于虚拟DOM
+     *  1. 本质是Object类型的对象
+     *  2. 虚拟dom比较“轻”，真实dom比较“重”，因为虚拟dom是react内部在用，不需要真实dom身上那么毒属性
+     *  3. 虚拟dom最终会被react转为真实dom，呈现在页面上
+     * /
+  </script>
+</body>
+</html>
