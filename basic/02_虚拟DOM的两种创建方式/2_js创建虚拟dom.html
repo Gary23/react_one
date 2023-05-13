@@ -16,9 +16,9 @@
     // 用js创建和 1_jsx创建虚拟dom 一样的虚拟Dom
     // const VDOM = React.createElement(标签名, 标签属性, 标签内容)
     const VDOM_JS = React.createElement('h1', {id: "title"}, React.createElement('span', {}, 'Hello,React'));
-    // 最终 1_jsx创建虚拟dom 的jsx写法也会被babel编译为上面的这种js的写法，所以jsx也可以额看做是js的一个语法糖
+    // 最终 1_jsx创建虚拟dom 的jsx写法也会被babel编译为上面的这种js的写法，所以jsx也可以额看做是js的一个语法糖,也扩展了一些js语法
     // ！！！ jsx的优势，js创建虚拟dom太繁琐，jsx更贴近html的写法 ！！！
-    // 
+    // XML：早起用于存储和传输数据
     ReactDOM.render(VDOM_JS, document.getElementById('test'))
   </script>
 </body>
