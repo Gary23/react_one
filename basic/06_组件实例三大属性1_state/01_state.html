@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>state</title>
+  <style>
+
+  </style>
+</head>
+<body>
+  <div id="test"></div>
+  <!-- 引入 react_development.js   react-dom.development.js  babel.min.js -->
+  <script src="../js/react.development.js"></script>
+  <script src="../js/react-dom.development.js"></script>
+  <script src="../js/babel.min.js"></script>
+  <script type="text/babel">
+    // 1. 创建类式组件
+    class Demo extends React.Component {
+      /*
+        构造器调用几次？  1+n次-----ReactDOM.render1次
+      */
+      // 使用state需要写构造器，默认state是null
+      constructor(props) {
+        // 调用父类的构造器
+        super(props);
+        // 初始化状态
+        this.state = {
+          isOpen: true,
+          applianceName: '电视机'
+        }
+        this.changeOpenState = this.changeOpenState.bind(this)
+      }
+      render() {
+        // render调用几次？  1+n次-----初始化是1次，setState是n次
+        // 读取状态
+        const {isOpen} = this.state;
+        return <h1 id="title" onClick={this.changeOpenState}>我{ isOpen ? '打开' : '关闭' }了{applianceName}的开关</h1>
+      }
+      /*
+        changeOpenState会放在Demo的原型对象上
+
+        通过Demo实例对象调用changeOpenState方法，this才是指向实例对象，
+        但是在h1中直接调用changeOpenState方法，不是通过Demo组件实例调用的，属于是直接调用
+        类中的方法局部开启了严格模式，所以this指向undefined
+
+        解决方法：
+          在构造器中绑定this：this.changeOpenState = this.changeOpenState.bind(this)
+                把changeOpenState从Demo的原型对象上拿下来，放到实例对象自身上
+                再在h1调用时，调用的就是实例自身上的changeOpenState方法，并不是原型上的方法
+      */
+      changeOpenState() { 
+        console.log(this);
+        /*
+          状态不可直接更新  this.state.isOpen = !this.state.isOpen; 不生效
+        */
+        //  状态必须通过setState进行更新，并且更新是一种合并，不是直接替换state对象，调用后会触发render
+        this.setState({
+          isOpen: !this.state.isOpen
+        })
+      }
+    }
+
+    // 2. 渲染组件
+    ReactDOM.render(<Demo/>, document.getElementById('test'));
+
+    // react中可以用下面两种方式，但是不推荐
+    // const title = document.getElementById('title');
+    // title.addEventListener('click', () => {
+    //   console.log('title被点击了');
+    // })
+    // const title = document.getElementById('title');
+    // title.onclick = () => {
+    //   console.log('title被点击了');
+    // }
+  </script>
+</body>
+</html>

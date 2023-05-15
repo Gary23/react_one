@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2_对props进行限制</title>
+  <style>
+
+  </style>
+</head>
+<body>
+  <div id="test"></div>
+  <div id="test2"></div>
+  <div id="test3"></div>
+  <!-- 引入 react_development.js   react-dom.development.js  babel.min.js -->
+  <script src="../js/react.development.js"></script>
+  <script src="../js/react-dom.development.js"></script>
+  <script src="../js/babel.min.js"></script>
+  <script type="text/babel">
+    // 1. 创建类式组件
+    class Demo extends React.Component {
+      render() {
+        // 从组件外部传入数据，通过props接收
+        const { name, age, gender } = this.props;
+        // props是只读的，不能修改
+        return (
+          <div>
+            <ul>
+              <li>姓名：{ name }</li>  
+              <li>性别：{ age + 1 }</li>  
+              <li>年龄：{ gender }</li>  
+            </ul>
+          </div>
+        )
+      }
+    }
+    // 如要引入prop-type.js
+    // 对props属性进行传参数据类型的限制
+    Demo.prototype = {
+      name: PropTypes.string.isRequired, // name必传，且必须是字符串
+      gender: PropTypes.string, // gender不是必传，但是必须是字符串
+      age: PropTypes.number, // age不是必传，但是必须是数值
+      speak: PropTypes.func // speak不是必传，但是必须是函数( 此处不是function )
+    }
+    // 设置props参数的默认值
+    Demo.defaultProps = {
+      gender: '男',   // 默认值男
+      age: 18,      // 默认值18
+    }
+    // 2. 渲染组件
+    ReactDOM.render(<Demo name="green" age="22" gerden="" />, document.getElementById('test'));
+    ReactDOM.render(<Demo name="jack" age={18} gerden="男" speak={speak} />, document.getElementById('test2'));
+
+    // ReactDOM.render(<Demo name="tim" age="15" gerden="女" />, document.getElementById('test3'));
+    const p = { name: 'tim', age: 18, gender: '女' }
+    // ...p是上面那种写法的语法糖
+    ReactDOM.render(<Demo {...p} />, document.getElementById('test3'));
+
+    function speak() {}
+
+  </script>
+</body>
+</html>

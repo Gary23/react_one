@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>类方法中this的指向</title>
+</head>
+<body>
+  <button id="btn1">按钮1</button>
+  <button id="btn2">按钮2</button>
+  <button onclick="demo">按钮3</button>
+  <script>
+    class Person {
+      constructor(name, age) {
+        this.name = name;
+        this.age = age;
+      }
+      speak() {
+        // 类中所有的方法都在局部自动开启了严格模式
+        console.log(this);
+      }
+    }
+
+    const p1 = new Person('jack', 18);
+    p1.speak();   // 通过实例调用speak方法
+    const x = p1.speak
+    x();          // 直接调用speak方法
+  </script>
+</body>
+</html>

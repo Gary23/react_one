@@ -51,6 +51,22 @@
     // 可以继承父类的方法，在Student的原型对象的原型上，但是如果Student也定义了speak方法，就会在第一层原型链上，也就会调用Student的方法了
     s1.speak()
 
+    class Car {
+      constructor(brand, price) {
+        this.brand = brand;
+        this.price = price;
+        // this.wheel = 4;    类中不需要传承的值不需要写在构造器中
+      }
+      // 类中可以直接写赋值语句，如下代码会给Car的实例对象添加一个属性名为wheel值为4
+      wheel = 4;
+    }
+
+    const c1 = new Car('宝马', 1000000);
+    const c2 = new Car('奔驰', 2000000);
+    console.log(c1);
+    console.log(c2);
+
+
     /*
       总结：
         1. 类中的构造器不是必须写的，要对实例进行初始化操作时才需要写
