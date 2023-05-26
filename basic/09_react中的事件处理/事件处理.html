@@ -18,15 +18,29 @@
   <script type="text/babel">
     // 1. 创建类式组件
     class Demo extends React.Component {
-      /*
-        1 通过onXxx属性置顶事件处理函数
-          a. React使用的是自定义（合成）事件，而不是使用的原生DOM事件 ----- 为了更好的兼容性
-          b. React中的事件是通过事件委托方式处理的（委托给组件最外层的元素）  
-        2 通过event.target得到发生事件的DOM元素对象
+      /*  一
+        1 通过onXxx属性指定事件处理函数，注意大小写
+          a. React使用的是自定义（合成）事件，而不是使用的原生DOM事件（原生是onclick  自定义的才是onClick） ----- 为了更好的兼容性
+          b. React中的事件是通过事件委托方式处理的（委托给组件最外层的元素）  比如下面的onBlur和onClick都是委托给最外层div的
+          <div>
+            <input ref={ this.demoRef } type="text" />
+            <button onClick={ this.showTip }>提示</button>
+            <br />
+            <input onBlur={ showTip2 } ref={ this.demoRef2 } type="text" />
+            <span>失去焦点触发</span>
+          </div>
 
+        2 通过event.target得到发生事件的DOM元素对象，下面的ref可以省略，直接用event
+        <input onBlur={ showTip2 } ref={ this.demoRef2 } type="text" />  
+
+        <input onBlur={ showTip2 } type="text" /> 
+          尽量少用ref
+        showTip2 = (event) => {
+          alert(event.target.value);
+        }
       */
 
-
+ 
       // 创建ref容器
       demoRef = React.createRef();
       // 多个ref必须调用多次React.createRef，否则后面的会覆盖前面的

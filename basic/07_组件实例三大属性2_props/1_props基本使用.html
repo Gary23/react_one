@@ -28,8 +28,8 @@
           <div>
             <ul>
               <li>姓名：{ name }</li>  
-              <li>性别：{ age }</li>  
-              <li>年龄：{ gender + 1 }</li>  
+              <li>性别：{ gender }</li>  
+              <li>年龄：{ age }</li>  
             </ul>
           </div>
         )
@@ -37,8 +37,8 @@
     }
 
     // 2. 渲染组件，传输标签属性
-    ReactDOM.render(<Demo name="green" age={22} gerden="男" />, document.getElementById('test'));
-    ReactDOM.render(<Demo name="jack" age={18} gerden="男" />, document.getElementById('test2'));
+    ReactDOM.render(<Demo name="green" age={22} gender="男" />, document.getElementById('test'));
+    ReactDOM.render(<Demo name="jack" age={18} gender="男" />, document.getElementById('test2'));
 
     // ReactDOM.render(<Demo name="tim" age="15" gerden="女" />, document.getElementById('test3'));
     const p = { name: 'tim', age: 18, gender: '女' }

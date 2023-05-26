@@ -17,6 +17,7 @@
   <script src="../js/react.development.js"></script>
   <script src="../js/react-dom.development.js"></script>
   <script src="../js/babel.min.js"></script>
+  <script src="../js/prop-types.js"></script>
   <script type="text/babel">
     // 1. 创建类式组件
     class Demo extends React.Component {
@@ -28,7 +29,7 @@
           <div>
             <ul>
               <li>姓名：{ name }</li>  
-              <li>性别：{ age + 1 }</li>  
+              <li>性别：{ age }</li>  
               <li>年龄：{ gender }</li>  
             </ul>
           </div>
@@ -37,20 +38,20 @@
     }
     // 如要引入prop-type.js
     // 对props属性进行传参数据类型的限制
-    Demo.prototype = {
+    Demo.propTypes = {
       name: PropTypes.string.isRequired, // name必传，且必须是字符串
       gender: PropTypes.string, // gender不是必传，但是必须是字符串
       age: PropTypes.number, // age不是必传，但是必须是数值
       speak: PropTypes.func // speak不是必传，但是必须是函数( 此处不是function )
     }
-    // 设置props参数的默认值
+    // // 设置props参数的默认值
     Demo.defaultProps = {
       gender: '男',   // 默认值男
       age: 18,      // 默认值18
     }
     // 2. 渲染组件
-    ReactDOM.render(<Demo name="green" age="22" gerden="" />, document.getElementById('test'));
-    ReactDOM.render(<Demo name="jack" age={18} gerden="男" speak={speak} />, document.getElementById('test2'));
+    ReactDOM.render(<Demo name="green" age="22" gender="" />, document.getElementById('test'));
+    ReactDOM.render(<Demo name="jack" age={18} gender="男" speak={speak} />, document.getElementById('test2'));
 
     // ReactDOM.render(<Demo name="tim" age="15" gerden="女" />, document.getElementById('test3'));
     const p = { name: 'tim', age: 18, gender: '女' }

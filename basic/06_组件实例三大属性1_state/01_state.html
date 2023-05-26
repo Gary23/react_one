@@ -19,7 +19,7 @@
     // 1. 创建类式组件
     class Demo extends React.Component {
       /*
-        构造器调用几次？  1+n次-----ReactDOM.render1次
+        构造器调用几次？  1次-----ReactDOM.render1次
       */
       // 使用state需要写构造器，默认state是null
       constructor(props) {
@@ -35,7 +35,7 @@
       render() {
         // render调用几次？  1+n次-----初始化是1次，setState是n次
         // 读取状态
-        const {isOpen} = this.state;
+        const {isOpen, applianceName} = this.state;
         return <h1 id="title" onClick={this.changeOpenState}>我{ isOpen ? '打开' : '关闭' }了{applianceName}的开关</h1>
       }
       /*
