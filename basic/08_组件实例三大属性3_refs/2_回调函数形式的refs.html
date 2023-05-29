@@ -24,8 +24,8 @@
             <input ref={(node) => { this.input1 = node }} type="text" />
             <button onClick={ this.showTip }>点击提示</button>
             <br />
-            <input onBlur={ this.showTip2 } ref={(node) => { this.input1 = node }} type="text" />
-            <span ref="input2" onBlur={ this.showTip2 }>失去焦点提示</span>
+            <input onBlur={ this.showTip2 } ref="input2" onBlur={ this.showTip2 } ref={(node) => { this.input1 = node }} type="text" />
+            <span>失去焦点提示</span>
           </div>
         )
       }

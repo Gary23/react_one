@@ -29,8 +29,8 @@
           <div>
             <ul>
               <li>姓名：{ name }</li>  
-              <li>性别：{ age }</li>  
-              <li>年龄：{ gender }</li>  
+              <li>年龄：{ age }</li>  
+              <li>性别：{ gender }</li>  
             </ul>
           </div>
         )
@@ -50,10 +50,10 @@
       age: 18,      // 默认值18
     }
     // 2. 渲染组件
-    ReactDOM.render(<Demo name="green" age="22" gender="" />, document.getElementById('test'));
+    ReactDOM.render(<Demo name="green" age={22} gender="" />, document.getElementById('test'));
     ReactDOM.render(<Demo name="jack" age={18} gender="男" speak={speak} />, document.getElementById('test2'));
 
-    // ReactDOM.render(<Demo name="tim" age="15" gerden="女" />, document.getElementById('test3'));
+    // ReactDOM.render(<Demo name="tim" age="15" gender="女" />, document.getElementById('test3'));
     const p = { name: 'tim', age: 18, gender: '女' }
     // ...p是上面那种写法的语法糖
     ReactDOM.render(<Demo {...p} />, document.getElementById('test3'));

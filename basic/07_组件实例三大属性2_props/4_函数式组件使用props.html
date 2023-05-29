@@ -17,11 +17,10 @@
   <script src="../js/react.development.js"></script>
   <script src="../js/react-dom.development.js"></script>
   <script src="../js/babel.min.js"></script>
+  <script src="../js/prop-types.js"></script>
+
   <script type="text/babel">
     // 1. 创建类式组件
-    class Demo extends React.Component {
-
-    }
 
 
     function Demo(props) {
@@ -31,12 +30,12 @@
         <div>
           <h1>姓名：{name}</h1>
           <h1>年龄：{age}</h1>
-          <h1>性别：{gerden}</h1>
+          <h1>性别：{gender}</h1>
         </div>
       )
     }
     // 对props属性进行传参数据类型的限制
-    Demo.prototype = {
+    Demo.propTypes = {
       name: PropTypes.string.isRequired, // name必传，且必须是字符串
       gender: PropTypes.string, // gender不是必传，但是必须是字符串
       age: PropTypes.number, // age不是必传，但是必须是数值
@@ -48,7 +47,7 @@
     }
 
     // 2. 渲染组件
-    ReactDOM.render(<Demo name="green" age="22" gerden="男" />, document.getElementById('test'));
+    ReactDOM.render(<Demo name="green" age={22} gender="男" />, document.getElementById('test'));
 
   </script>
 </body>

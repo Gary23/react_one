@@ -24,8 +24,8 @@
             <input ref="input1" type="text" />
             <button onClick={ this.showTip }>点击提示</button>
             <br />
-            <input type="text" />
-            <span ref="input2" onBlur={ this.showTip2 }>失去焦点提示</span>
+            <input type="text" ref="input2" onBlur={ this.showTip2 }/>
+            <span>失去焦点提示</span>
           </div>
         )
       }
