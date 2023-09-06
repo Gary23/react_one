@@ -27,7 +27,7 @@
       }
       render() {
         // 读取状态 
-        const {isOpen} = this.state;
+        const {isOpen, applianceName} = this.state;
         return <h1 id="title" onClick={this.changeOpenState}>我{ isOpen ? '打开' : '关闭' }了{applianceName}的开关</h1>
       }
       // 自定义方法--------function改为箭头函数，改为赋值语句就把方法放在实例自身了，this就可以指向实例对象了，因为箭头函数的this指向定义时所在的对象

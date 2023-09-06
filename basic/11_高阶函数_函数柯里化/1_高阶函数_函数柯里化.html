@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1_高阶函数_函数柯里化</title>
+  <style>
+
+  </style>
+</head>
+<body>
+  <div id="test"></div>
+  <!-- 引入 react_development.js   react-dom.development.js  babel.min.js -->
+  <script src="../js/react.development.js"></script>
+  <script src="../js/react-dom.development.js"></script>
+  <script src="../js/babel.min.js"></script>
+  <script type="text/babel">
+
+    /*
+      高阶函数的定义：如果一个函数符合下面任意规范，就是高阶函数
+        1. 若a函数，接收的参数是一个函数，那么A就可以称之为高阶函数
+        2. 若a函数，调用的返回值依然是一个函数，那么A就可以称之为高阶函数
+        常见的高阶函数：Promise  setTimeout  Array.map 等等
+
+      函数的柯里化：通过函数调用，继续返回函数的方式，实现多次接收参数，最后统一处理的函数编码形式（5_演示函数柯里化）
+      
+    */
+
+    // 1. 创建类式组件
+    class Demo extends React.Component {
+      // 初始化状态
+      state = {
+        username: '',
+        password: '',
+      }
+      // 10_react中收集表单数据--受控组件的案例，优化为只使用一个saveFormData函数，代替原来saveUsername和savePassword的重复功能函数
+      render() {
+        return (
+          <form action="http://www.baidu.com" onSubmit={this.handleSubmit}>
+            {/* 必须把函数当做回调的返回值(saveFormData的返回值必须是一个函数)，
+            因为this.saveFormData的写法，是onChange触发时才调用saveFormData 
+            而this.saveFormData()的写法，是提前执行，把调用结果返回给onChange，如果不返回一个函数，onChange就没法执行*/}
+            用户名：<input onChange={ this.saveFormData('username') } type="text" name="username" />
+            密码：<input onChange={ this.saveFormData('password') } type="password" name="password" />  
+            <button>登陆</button>
+          </form>
+        )
+      }
+      saveFormData = (key) => {
+        return (event) => {
+          // 存在状态里
+          this.setState({
+            [key]: event.target.value
+          })
+        }
+      }
+
+      handleSubmit = (event) => {
+        event.preventDefault();   // 阻止默认事件（表单提交）
+        const { username, password } = this.state;
+        alert(`用户名：${username} 密码：${password}`);
+      }
+    }
+
+    // 2. 渲染组件
+    ReactDOM.render(<Demo />, document.getElementById('test'));
+
+  </script>
+</body>
+</html>

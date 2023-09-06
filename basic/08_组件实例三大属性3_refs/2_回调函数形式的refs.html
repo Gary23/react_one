@@ -21,17 +21,16 @@
       render() {
         return (
           <div>
+            {/* node就是input元素本身 */}
             <input ref={(node) => { this.input1 = node }} type="text" />
             <button onClick={ this.showTip }>点击提示</button>
             <br />
-            <input onBlur={ this.showTip2 } ref="input2" onBlur={ this.showTip2 } ref={(node) => { this.input1 = node }} type="text" />
+            <input onBlur={ this.showTip2 } ref={(node) => { this.input1 = node }} type="text" />
             <span>失去焦点提示</span>
           </div>
         )
       }
       showTip = () => {
-        // refs收集的不是虚拟dom，是虚拟dom转换后的真实dom
-        // 字符串形式的ref，已经不被官方推荐，因为字符串形式的ref，只能收集一个元素，而且只能收集到真实dom，不能收集到虚拟dom
         const {input1} = this;
         alert(input1.value);
       }

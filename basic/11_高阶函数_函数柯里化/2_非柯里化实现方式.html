@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>2_受控组件</title>
+  <title>2_非柯里化实现方式</title>
   <style>
 
   </style>
@@ -16,6 +16,17 @@
   <script src="../js/react-dom.development.js"></script>
   <script src="../js/babel.min.js"></script>
   <script type="text/babel">
+
+    /*
+      高阶函数的定义：如果一个函数符合下面任意规范，就是高阶函数
+        1. 若a函数，接收的参数是一个函数，那么A就可以称之为高阶函数
+        2. 若a函数，调用的返回值依然是一个函数，那么A就可以称之为高阶函数
+        常见的高阶函数：Promise  setTimeout  Array.map 等等
+
+      函数的柯里化：通过函数调用，继续返回函数的方式，实现多次接收参数，最后统一处理的函数编码形式（5_演示函数柯里化）
+      
+    */
+
     // 1. 创建类式组件
     class Demo extends React.Component {
       // 初始化状态
@@ -23,28 +34,21 @@
         username: '',
         password: '',
       }
-      // 页面中输入类的dom，随着输入把值先存到状态里，需要用的时候直接从状态里取值，就是受控组件
-      // 因为react官网写过请勿过度使用ref  所以更推荐受控组件的写法
+      // 10_react中收集表单数据--受控组件的案例，优化为只使用一个saveFormData函数，代替原来saveUsername和savePassword的重复功能函数
       render() {
         return (
           <form action="http://www.baidu.com" onSubmit={this.handleSubmit}>
-            用户名：<input onChange={ this.saveUsername } type="text" name="username" />
-            密码：<input onChange={ this.savePassword } type="password" name="password" />  
+            {/* 不使用柯里化的写法，直接在onChange中赋值一个匿名函数，onChange触发时调用这个匿名函数 */}
+            用户名：<input onChange={ (event) => { this.saveFormData('username', event) } } type="text" name="username" />
+            密码：<input onChange={ (event) => { this.saveFormData('password', event) } } type="password" name="password" />  
             <button>登陆</button>
           </form>
         )
       }
-      saveUsername = (event) => {
+      saveFormData = (key, event) => {
         // 存在状态里
         this.setState({
-          username: event.target.value
-        })
-      }
-
-      savePassword = (event) => {
-        // 存在状态里
-        this.setState({
-          password: event.target.value
+          [key]: event.target.value
         })
       }
 
