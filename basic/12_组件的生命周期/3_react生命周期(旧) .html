@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3_react生命周期(旧)</title>
+</head>
+<body>
+  <div id="test"></div>
+  <!-- 引入 react_development.js   react-dom.development.js  babel.min.js -->
+  <script src="../js/react.development.js"></script>
+  <script src="../js/react-dom.development.js"></script>
+  <script src="../js/babel.min.js"></script>
+  <script type="text/babel">
+    // 求和案例
+    // 创建一个求和的类组件
+    // 元素：标题 当前求和为？？？    按钮+1
+    // 初始化状态，求和的值
+    // 按钮事件更新求和值，+1
+    // 增加按钮，卸载组件
+    // 增加按钮，强制更新
+
+    /*
+      生命周期：
+        更新时顺序
+          shouldComponentUpdate  组件是否应该被更新，是控制组件更新的阀门，setState之后会调用shouldComponentUpdate，如果shouldComponentUpdate返回了true（如果没写默认true）才会继续执行调用render
+          componentWillUpdate   组件将要更新，如果是强制更新forceUpdate，会跳过shouldComponentUpdate直接执行componentWillUpdate（用于不想修改状态state，只想render）
+          componentDidUpdate   组件更新完成
+    */
+
+    class Count extends React.Component {
+
+      constructor(prop) {
+        super(prop)
+        this.state = {
+          count: 0
+        }
+        console.log('constructor')
+      }
+      componentWillMount() {
+        console.log('componentWillMount')
+      }
+      render() {
+        console.log('render')
+        return (
+          <div>
+            <p>当前求和值为{ this.state.count }</p>  
+            <button onClick={ this.add }>加1</button>
+            <button onClick={ this.unmount }>卸载组件</button>
+            <button onClick={ this.force }>强制更新</button>
+          </div>
+        )
+      }
+      componentDidMount() {
+        console.log('componentDidMount')
+      }
+      componentWillUnmount() {
+        console.log('componentWillUnmount')
+      }
+      shouldComponentUpdate() {
+        console.log('shouldComponentUpdate')
+        return true
+      }
+      componentWillUpdate() {
+        console.log('componentWillUpdate')
+      }
+      componentDidUpdate() {
+        console.log('componentDidUpdate')
+      }
+      add = () => {
+        let { count } = this.state
+        this.setState({
+          count: count + 1
+        })
+      }
+      unmount = () => {
+        ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+      }
+      force = () => {
+        this.forceUpdate()
+      }
+    }
+
+    ReactDOM.render(<Count/>, document.getElementById('test'))
+
+
+  </script>
+</body>
+</html>

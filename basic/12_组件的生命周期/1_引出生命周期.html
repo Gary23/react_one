@@ -20,9 +20,49 @@
         // unmountComponentAtNode 与 render 一样，传参一个dom元素
       4 声明opacity状态，绑定的文本元素的style属性上 
       5 计算opacity  2秒钟从1到0  每200毫秒，opacity减少0.1  如果opacity小于1了就重新赋值为1
-    
+      6 在组件挂载完毕之后调用opacity定时器  componentDidMount
+      7 在组件将要卸载的钩子停止定时器 componentWillUnmount
     */
+    class Life extends React.Component {
+      state = {
+        opacity: 1
+      }
+      close = () => {
+        ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+      }
 
+      opacity = () => {
+        this.timer = setInterval(() => {
+          let { opacity } = this.state
+          opacity -= 0.1
+          if (opacity <= 0) {
+            opacity = 1
+          }
+          this.setState({
+            opacity,
+          })
+        }, 200)
+      }
+
+      componentWillUnmount() {
+        clearInterval(this.timer)
+      }
+
+      componentDidMount() {
+        this.opacity()
+      }
+
+      render() {
+
+        return (
+          <div id="react">
+            <p style={{ opacity: this.state.opacity }}>React太难了</p>
+            <button onClick={ this.close }>不学了</button>  
+          </div>
+        )
+      }
+    }
+    ReactDOM.render(<Life />, document.getElementById('test'))
   </script>
 </body>
 </html>

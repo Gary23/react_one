@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2_react生命周期(旧)</title>
+</head>
+<body>
+  <div id="test"></div>
+  <!-- 引入 react_development.js   react-dom.development.js  babel.min.js -->
+  <script src="../js/react.development.js"></script>
+  <script src="../js/react-dom.development.js"></script>
+  <script src="../js/babel.min.js"></script>
+  <script type="text/babel">
+    // 求和案例
+    // 创建一个求和的类组件
+    // 元素：标题 当前求和为？？？    按钮+1
+    // 初始化状态，求和的值
+    // 按钮事件更新求和值，+1
+    // 增加按钮，卸载组件
+
+    /*
+      生命周期：
+        挂载时顺序：
+        constructor    构造器
+        componentWillMount    组件将要将要挂载的钩子（将要挂载也就是render之前）
+        render      渲染
+        componentDidMount   组件挂载完成的钩子（挂载完成也就是render之后）
+    */
+
+    class Count extends React.Component {
+
+      constructor(prop) {
+        super(prop)
+        this.state = {
+          count: 0
+        }
+        console.log('constructor')
+      }
+      componentWillMount() {
+        console.log('componentWillMount')
+      }
+      render() {
+        console.log('render')
+        return (
+          <div>
+            <p>当前求和值为{ this.state.count }</p>  
+            <button onClick={ this.add }>加1</button>
+            <button onClick={ this.unmount }>卸载组件</button>
+          </div>
+        )
+      }
+      componentDidMount() {
+        console.log('componentDidMount')
+      }
+      componentWillUnmount() {
+        console.log('componentWillUnmount')
+      }
+      add = () => {
+        let { count } = this.state
+        this.setState({
+          count: count + 1
+        })
+      }
+      unmount = () => {
+        ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+      }
+    }
+
+    ReactDOM.render(<Count/>, document.getElementById('test'))
+
+
+  </script>
+</body>
+</html>
