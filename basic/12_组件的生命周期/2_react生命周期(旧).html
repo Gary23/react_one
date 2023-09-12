@@ -18,14 +18,25 @@
     // 初始化状态，求和的值
     // 按钮事件更新求和值，+1
     // 增加按钮，卸载组件
+    // 增加按钮，强制更新
+
 
     /*
       生命周期：
-        挂载时顺序：
+        组件初始化阶段挂载时顺序：  ReactDOM.render触发
         constructor    构造器
         componentWillMount    组件将要将要挂载的钩子（将要挂载也就是render之前）
         render      渲染
-        componentDidMount   组件挂载完成的钩子（挂载完成也就是render之后）
+        componentDidMount   组件挂载完成的钩子（挂载完成也就是render之后）   比较常用，通常在这个钩子坐初始化操作，例如开定时器、网络请求、订阅消息
+
+        组件更新阶段更新时顺序：   this.setState或父组件render触发
+        shouldComponentUpdate  组件是否应该被更新，是控制组件更新的阀门，setState之后会调用shouldComponentUpdate，如果shouldComponentUpdate返回了true（如果没写默认true）才会继续执行调用render
+        componentWillUpdate   组件将要更新，如果是强制更新forceUpdate，会跳过shouldComponentUpdate直接执行componentWillUpdate（用于不想修改状态state，只想render）
+        render      渲染
+        componentDidUpdate   组件更新完成
+
+        组件卸载   ReactDOM.unmountComponentAtNode触发
+        componentWillUnmount        比较常用，通常在这个钩子做收尾，例如关闭定时器、取消订阅
     */
 
     class Count extends React.Component {
@@ -47,6 +58,7 @@
             <p>当前求和值为{ this.state.count }</p>  
             <button onClick={ this.add }>加1</button>
             <button onClick={ this.unmount }>卸载组件</button>
+            <button onClick={ this.force }>强制更新</button>
           </div>
         )
       }
@@ -55,6 +67,16 @@
       }
       componentWillUnmount() {
         console.log('componentWillUnmount')
+      }
+      shouldComponentUpdate() {
+        console.log('shouldComponentUpdate')
+        return true
+      }
+      componentWillUpdate() {
+        console.log('componentWillUpdate')
+      }
+      componentDidUpdate() {
+        console.log('componentDidUpdate')
       }
       add = () => {
         let { count } = this.state
@@ -65,10 +87,49 @@
       unmount = () => {
         ReactDOM.unmountComponentAtNode(document.getElementById('test'))
       }
+      force = () => {
+        this.forceUpdate()
+      }
     }
 
-    ReactDOM.render(<Count/>, document.getElementById('test'))
+    // ReactDOM.render(<Count/>, document.getElementById('test'))
 
+    // 创建A组件
+    // 创建B组件
+    // A和B形成父子关系，<B/>  A组件展示汽车的信息  初始化状态：carName ，
+    // 增加按钮换车点击更新状态carName，
+    // 让B组件展示carName，给B组件传值carName
+    // B组件接收carName信息
+    // B组件钩子 componentWillReceiveProps 将要接收参数的钩子（第一次传的不算，从第二次传参（变更参数值）开始执行），可以接收参数props
+
+    class A extends React.Component {
+      state = {
+        carName: '宝马'
+      }
+      render() {
+        return (
+          <div>
+            <B carName={this.state.carName} />
+            <button onClick={ () => { this.setState({ carName: '奔驰' }) } }>change</button>
+          </div>
+        )
+      }
+    }
+
+    class B extends React.Component {
+      componentWillReceiveProps(props) {
+        console.log('componentWillReceiveProps', props)
+      }
+      render() {
+        return (
+          <div>
+            <p>{ this.props.carName }</p>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<A/>, document.getElementById('test'))
 
   </script>
 </body>

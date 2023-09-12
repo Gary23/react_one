@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>3_react生命周期(旧)</title>
+  <title>3_react生命周期(新)</title>
 </head>
 <body>
   <div id="test"></div>
   <!-- 引入 react_development.js   react-dom.development.js  babel.min.js -->
-  <script src="../js/react.development.js"></script>
-  <script src="../js/react-dom.development.js"></script>
-  <script src="../js/babel.min.js"></script>
+  <script src="../js/17.0.1/react.development.js"></script>
+  <script src="../js/17.0.1/react-dom.development.js"></script>
+  <script src="../js/17.0.1/babel.min.js"></script>
   <script type="text/babel">
     // 求和案例
     // 创建一个求和的类组件
@@ -19,13 +19,26 @@
     // 按钮事件更新求和值，+1
     // 增加按钮，卸载组件
     // 增加按钮，强制更新
+    // 删除三个要启用的钩子
+    // 增加 getDerivedStateFromProps 钩子, 钩子内部返回状态count:100
+
 
     /*
-      生命周期：
-        更新时顺序
-          shouldComponentUpdate  组件是否应该被更新，是控制组件更新的阀门，setState之后会调用shouldComponentUpdate，如果shouldComponentUpdate返回了true（如果没写默认true）才会继续执行调用render
-          componentWillUpdate   组件将要更新，如果是强制更新forceUpdate，会跳过shouldComponentUpdate直接执行componentWillUpdate（用于不想修改状态state，只想render）
-          componentDidUpdate   组件更新完成
+      在新版本中，componentWillMount、componentWillUpdate、componentWillReceiveProps需要加上 UNSAFE_ 前缀，UNSAFE_前缀标识在未来的react版本中可能会有bug，特别是react未来更新异步渲染之后
+      在即将废弃的同时，增加了getDerivedStateFromProps和getSnapshotBeforeUpdate两个钩子
+
+      getDerivedStateFromProps: 从props得到一个派生的状态----可以接收一个props参数（在ReactDom.render中传递给组件的参数）；state参数（类中声明的state），即state的值在任何时候都取决于props的传参（极少场景能用到）
+      使用需要增加static关键字，因为他，需要返回一个状态对象或者null，不能不设定返回值(undefined)
+
+      在挂载时，
+        constructor
+        getDerivedStateFromProps（new Props   setState  forceUpdate）
+        render
+      在更新时
+        getDerivedStateFromProps（new Props   setState  forceUpdate）
+        shouldComponentUpdate
+        render
+        getSnapshotBeforeUpdate
     */
 
     class Count extends React.Component {
@@ -36,9 +49,6 @@
           count: 0
         }
         console.log('constructor')
-      }
-      componentWillMount() {
-        console.log('componentWillMount')
       }
       render() {
         console.log('render')
@@ -61,9 +71,6 @@
         console.log('shouldComponentUpdate')
         return true
       }
-      componentWillUpdate() {
-        console.log('componentWillUpdate')
-      }
       componentDidUpdate() {
         console.log('componentDidUpdate')
       }
@@ -82,7 +89,6 @@
     }
 
     ReactDOM.render(<Count/>, document.getElementById('test'))
-
 
   </script>
 </body>
