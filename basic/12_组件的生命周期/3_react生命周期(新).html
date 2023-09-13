@@ -21,14 +21,23 @@
     // 增加按钮，强制更新
     // 删除三个要启用的钩子
     // 增加 getDerivedStateFromProps 钩子, 钩子内部返回状态count:100
+    // 增加 getSnapshotBeforeUpdate 钩子，
 
 
     /*
       在新版本中，componentWillMount、componentWillUpdate、componentWillReceiveProps需要加上 UNSAFE_ 前缀，UNSAFE_前缀标识在未来的react版本中可能会有bug，特别是react未来更新异步渲染之后
       在即将废弃的同时，增加了getDerivedStateFromProps和getSnapshotBeforeUpdate两个钩子
 
-      getDerivedStateFromProps: 从props得到一个派生的状态----可以接收一个props参数（在ReactDom.render中传递给组件的参数）；state参数（类中声明的state），即state的值在任何时候都取决于props的传参（极少场景能用到）
-      使用需要增加static关键字，因为他，需要返回一个状态对象或者null，不能不设定返回值(undefined)
+      getDerivedStateFromProps: 
+      若state的值在任何时候都取决于props的传参（极少场景能用到）则可以使用
+      从props得到一个派生的状态----可以接收一个props参数（在ReactDom.render中传递给组件的参数）；state参数（类中声明的state），
+      使用需要增加static关键字，需要返回一个状态对象或者null，不能不设定返回值(undefined)
+
+      getSnapshotBeforeUpdate:
+      在组件更新前形成一个快照，可以取到一些在元素更新生成之前（componentDidUpdate生效之前）的dom元素的属性值（此用法并不常见）
+      必须返回一个快照值(任意值)或者 null，不能不设定返回值(undefined)，返回值会传给componentDidUpdate（第三个参数）
+      
+      componentDidUpdate补充：接收3个参数，接收preProps（之前传递的props）、preState（之前的状态）、snapshot（快照值）
 
       在挂载时，
         constructor
@@ -74,6 +83,11 @@
       componentDidUpdate() {
         console.log('componentDidUpdate')
       }
+      static getDerivedStateFromProps(props, state) {
+        console.log('getDerivedStateFromProps', props, state)
+        return null
+        // return props
+      }
       add = () => {
         let { count } = this.state
         this.setState({
@@ -88,7 +102,7 @@
       }
     }
 
-    ReactDOM.render(<Count/>, document.getElementById('test'))
+    ReactDOM.render(<Count count={100} />, document.getElementById('test'))
 
   </script>
 </body>

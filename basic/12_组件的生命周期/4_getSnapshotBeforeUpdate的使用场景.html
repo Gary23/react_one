@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4_getSnapshotBeforeUpdate的使用场景(新)</title>
+  <!-- 给list创建样式，背景色、要出滚动条overflow auto -->
+</head>
+<body>
+  <div id="test"></div>
+  <!-- 创建一个list -->
+  <!-- 引入 react_development.js   react-dom.development.js  babel.min.js -->
+  <script src="../js/17.0.1/react.development.js"></script>
+  <script src="../js/17.0.1/react-dom.development.js"></script>
+  <script src="../js/17.0.1/babel.min.js"></script>
+  <script type="text/babel">
+    // 用js代码让列表里如果让第二条或者第三条顶头
+    // 或者list元素，设定list的scrollTop值
+    // list元素内容区的高度 scrollHeight (list列表总长度的高度)
+
+    // 创建NewList类，render之前html里的list元素，
+    // 元素挂载的钩子里  每秒增加一条列表项  render的元素遍历列表数组  这时如果把滚动条滑动到最下方，滚动条会不停地滚动，用getSnapshotBeforeUpdate钩子解决这个问题
+    // getSnapshotBeforeUpdate钩子中，获取一下内容区的高度并return  也就是list的scrollHeight  render后会传给componentDidUpdate
+    // componentDidUpdate钩子中动态调整list的scrollTop，
+
+  </script>
+</body>
+</html>
