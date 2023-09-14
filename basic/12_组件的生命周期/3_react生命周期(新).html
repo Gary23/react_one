@@ -43,11 +43,15 @@
         constructor
         getDerivedStateFromProps（new Props   setState  forceUpdate）
         render
+        componentDidMount
       在更新时
         getDerivedStateFromProps（new Props   setState  forceUpdate）
         shouldComponentUpdate
         render
         getSnapshotBeforeUpdate
+        componentDidUpdate
+      卸载组件
+        componentWillUnmount
     */
 
     class Count extends React.Component {
@@ -80,13 +84,17 @@
         console.log('shouldComponentUpdate')
         return true
       }
-      componentDidUpdate() {
-        console.log('componentDidUpdate')
+      componentDidUpdate(preProps, preState, snapshot) {
+        console.log('componentDidUpdate', preProps, preState, snapshot)
       }
       static getDerivedStateFromProps(props, state) {
         console.log('getDerivedStateFromProps', props, state)
         return null
         // return props
+      }
+      getSnapshotBeforeUpdate() {
+        console.log('getSnapshotBeforeUpdate')
+        return {count: this.state.count}
       }
       add = () => {
         let { count } = this.state

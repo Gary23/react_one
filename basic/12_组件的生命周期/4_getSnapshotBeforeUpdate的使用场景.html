@@ -6,6 +6,22 @@
   <title>4_getSnapshotBeforeUpdate的使用场景(新)</title>
   <!-- 给list创建样式，背景色、要出滚动条overflow auto -->
 </head>
+<style> 
+  .list {
+    height: 180px;
+    width: 200px;
+    border: 1px solid #229081;
+    padding: 0;
+    overflow: auto;
+  }
+  li {
+    height: 30px;
+    line-height: 30px;
+    background: #FFEA99;
+    color: #AA5500;
+    list-style: none;
+  }
+</style>
 <body>
   <div id="test"></div>
   <!-- 创建一个list -->
@@ -22,6 +38,55 @@
     // 元素挂载的钩子里  每秒增加一条列表项  render的元素遍历列表数组  这时如果把滚动条滑动到最下方，滚动条会不停地滚动，用getSnapshotBeforeUpdate钩子解决这个问题
     // getSnapshotBeforeUpdate钩子中，获取一下内容区的高度并return  也就是list的scrollHeight  render后会传给componentDidUpdate
     // componentDidUpdate钩子中动态调整list的scrollTop，
+    class NewsList extends React.Component {
+      state = {
+        timer: null,
+        newsArray: []
+      }
+      render() {
+        return <div>
+          <ul className="list" ref="list">
+            {
+              this.state.newsArray.map((element, index) => {
+                return <li key={index}>{ element }</li>
+              })
+            }
+          </ul>
+        </div>
+      }
+      getList = () => {
+        let { newsArray } = this.state
+        let timer = setInterval(() => {
+          newsArray.unshift(`新闻${newsArray.length + 1}`)
+          this.setState({
+            newsArray,
+          })
+        }, 1500);
+        this.setState({
+          timer,
+        })
+      }
+      getSnapshotBeforeUpdate() {
+        console.log('getSnapshotBefoerUpdate')
+        let { list } = this.refs
+        return { scrollHeight: list.scrollHeight }
+      }
+      componentDidUpdate(preProps, preState, snapshot) {
+        console.log('componentDidUpdate', preProps, preState, snapshot)
+        let { scrollHeight } = snapshot
+        let { newsArray } = preState
+        let length = newsArray.length
+        let { list } = this.refs
+        list.scrollTop += list.scrollHeight - scrollHeight
+      }
+      componentDidMount() {
+        this.getList()
+      }
+      componentWillUnmount() {
+        clearInterval(this.state.timer)
+      }
+    }
+    ReactDOM.render(<NewsList />, document.getElementById('test'))
 
   </script>
 </body>
