@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1_验证Diffing算法</title>
+</head>
+<body>
+  <div id="test"></div>
+  <!-- 创建一个list -->
+  <!-- 引入 react_development.js   react-dom.development.js  babel.min.js -->
+  <script src="../js/17.0.1/react.development.js"></script>
+  <script src="../js/17.0.1/react-dom.development.js"></script>
+  <script src="../js/17.0.1/babel.min.js"></script>
+  <script type="text/babel">
+    // 创建 Time 类，创建日期对象的状态date
+    // componentDidMount钩子中定时器每秒钟更新date状态值
+    // render input  span实时展示date状态 toTimeString
+
+    // 此时Diffing就在起作用，因为每秒钟都在渲染，每秒钟都会比对render的元素，每次比对到span标签内的元素有变化，就只会重新渲染span标签（最小单位就是标签），但是如果span内部还有标签且没有改变，则不会重新渲染内部标签
+    
+  </script>
+</body>
+</html>

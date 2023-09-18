@@ -30,14 +30,7 @@
   <script src="../js/17.0.1/react-dom.development.js"></script>
   <script src="../js/17.0.1/babel.min.js"></script>
   <script type="text/babel">
-    // 用js代码让列表里如果让第二条或者第三条顶头
-    // 或者list元素，设定list的scrollTop值
-    // list元素内容区的高度 scrollHeight (list列表总长度的高度)
-
-    // 创建NewList类，render之前html里的list元素，
-    // 元素挂载的钩子里  每秒增加一条列表项  render的元素遍历列表数组  这时如果把滚动条滑动到最下方，滚动条会不停地滚动，用getSnapshotBeforeUpdate钩子解决这个问题
-    // getSnapshotBeforeUpdate钩子中，获取一下内容区的高度并return  也就是list的scrollHeight  render后会传给componentDidUpdate
-    // componentDidUpdate钩子中动态调整list的scrollTop，
+    // 创建NewList类，不停加载数据，此时滚动条不停滚动，通过getSnapshotBeforeUpdate钩子解决这个问题，让滚动条可以停留在任意位置
     class NewsList extends React.Component {
       state = {
         timer: null,
@@ -55,6 +48,7 @@
         </div>
       }
       getList = () => {
+        // 每秒增加一条列表项  滚动条会不停地滚动，用getSnapshotBeforeUpdate钩子解决这个问题
         let { newsArray } = this.state
         let timer = setInterval(() => {
           newsArray.unshift(`新闻${newsArray.length + 1}`)
@@ -67,11 +61,13 @@
         })
       }
       getSnapshotBeforeUpdate() {
+        // 获取一下内容区的高度并return  也就是list的scrollHeight  render后会传给componentDidUpdate
         console.log('getSnapshotBefoerUpdate')
         let { list } = this.refs
         return { scrollHeight: list.scrollHeight }
       }
       componentDidUpdate(preProps, preState, snapshot) {
+        // 根据getSnapshotBeforeUpdate传入的值，动态调整list的scrollTop，
         console.log('componentDidUpdate', preProps, preState, snapshot)
         let { scrollHeight } = snapshot
         let { newsArray } = preState

@@ -13,15 +13,9 @@
   <script src="../js/babel.min.js"></script>
   <script type="text/babel">
     /*
-      1 创建类组件并挂在，
-      2 创建元素，文本和按钮
-      3 按钮点击事件，点击后卸载组件
-        // mount 挂在组件(render方法)   unmount 卸载组件（unmountComponentAtNode）
-        // unmountComponentAtNode 与 render 一样，传参一个dom元素
-      4 声明opacity状态，绑定的文本元素的style属性上 
-      5 计算opacity  2秒钟从1到0  每200毫秒，opacity减少0.1  如果opacity小于1了就重新赋值为1
-      6 在组件挂载完毕之后调用opacity定时器  componentDidMount
-      7 在组件将要卸载的钩子停止定时器 componentWillUnmount
+      让 p 元素通过opacity属性逐渐消失，点击 button 元素后卸载整个组件，
+      在组件挂载完毕之后通过 componentDidMount 钩子调用opacity定时器  
+      通过 componentWillUnmount 钩子将要卸载的钩子停止定时器 
     */
     class Life extends React.Component {
       state = {
@@ -30,7 +24,6 @@
       close = () => {
         ReactDOM.unmountComponentAtNode(document.getElementById('test'))
       }
-
       opacity = () => {
         this.timer = setInterval(() => {
           let { opacity } = this.state
@@ -43,17 +36,15 @@
           })
         }, 200)
       }
-
+      // mount 挂在组件(render方法) 反之 unmount 就是卸载组件（unmountComponentAtNode）
+      // unmountComponentAtNode 与 render 一样，传参一个dom元素
       componentWillUnmount() {
         clearInterval(this.timer)
       }
-
       componentDidMount() {
         this.opacity()
       }
-
       render() {
-
         return (
           <div id="react">
             <p style={{ opacity: this.state.opacity }}>React太难了</p>
