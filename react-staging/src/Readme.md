@@ -1,0 +1,2 @@
+components目录新建4个组件 header list item footer
+先创建静态组件html和css
