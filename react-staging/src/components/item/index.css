@@ -1,0 +1,17 @@
+.todo-item,
+.todo-item .left,
+.todo-item .right {
+  display: flex;
+  align-items: center;
+}
+.todo-item {
+  justify-content: space-between;
+  border-bottom: 1px solid #999;
+  padding: 8px 15px;
+}
+.todo-item:nth-last-child(1) {
+  border-bottom: none;
+}
+.todo-item input {
+  margin-right: 5px;
+}

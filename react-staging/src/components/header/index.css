@@ -1,0 +1,8 @@
+.todo-header input {
+  border-radius: 6px;
+  border: 1px solid #999;
+  line-height: 25px;
+  width: 100%;
+  padding: 0 15px;
+  box-sizing: border-box;
+}

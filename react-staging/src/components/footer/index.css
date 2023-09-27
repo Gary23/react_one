@@ -1,0 +1,13 @@
+.todo-footer,
+.todo-footer .left,
+.todo-footer .right {
+  display: flex;
+  align-items: center;
+}
+.todo-footer {
+  margin-top: 10px;
+  justify-content: space-between;
+}
+.todo-footer input {
+  margin-right: 15px;
+}
