@@ -1,25 +1,8 @@
 import React, { Component } from 'react'
-import SubPub from 'pubsub-js'
 
 export default class List extends Component {
-  state = {
-    users: [],
-    loadingFlag: false,
-    firstFlag: true,
-    errorState: false,
-    errorMessage: ''
-  }
-  componentDidMount() {
-    this.updateListSub = SubPub.subscribe('updateList', (name, data) => {
-      console.log(name)
-      this.setState(data)
-    })
-  }
-  componentWillUnmount() {
-    SubPub.unsubscribe(this.updateListSub)
-  }
   render() {
-    const { users, firstFlag, loadingFlag, errorState, errorMessage } = this.state
+    const { users, firstFlag, loadingFlag, errorState, errorMessage } = this.props
 
     return (
       <div className="row">

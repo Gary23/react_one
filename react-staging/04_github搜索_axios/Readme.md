@@ -1,4 +1,12 @@
 ---------------
+promise链!!!!   
+第一个 .then 中 第一个回调是resolve   第二个回调是reject   
+第二个 .then 中 可以拿到第一个then的return  如果没有return  则第二个then获取到的是undefined
+
+中断promise链！！！！
+用catch兜底，用catch兜底的话，就不需要再then里写reject的回调了，有错误，就会进入到兜底的catch
+如果不想兜底，可以在.then的reject回调中  return new Promise(() => {})  就不会继续执行后面的.then了
+
 
 axios
 
@@ -45,11 +53,3 @@ Search组件
 -----------
 
 fetch
-
-promise链!!!!   
-第一个 .then 中 第一个回调是resolve   第二个回调是reject   
-第二个 .then 中 可以拿到第一个then的return  如果没有return  则第二个then获取到的是undefined
-
-中断promise链！！！！
-用catch兜底，用catch兜底的话，就不需要再then里写reject的回调了，有错误，就会进入到兜底的catch
-如果不想兜底，可以在.then的reject回调中  return new Promise(() => {})  就不会继续执行后面的.then了
