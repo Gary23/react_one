@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Switch, BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 import About from './pages/about'
 import Home from './pages/home'
 import MyNavLink from './components/MyNavLink'
@@ -26,32 +26,14 @@ export default class App extends Component {
                 <MyNavLink className="list-group-item" to="/home">Home</MyNavLink>
               </div>
             </div>
-            <Switch>
-              <Route 
-                path="/about"
-                component={About}
-              />
-              <Route 
-                path="/home"
-                component={About}
-              />
-              <Route 
-                path="/home"
-                component={Home}
-              />
-            </Switch>
-            {/* <Route 
+            <Route 
               path="/about"
               component={About}
             />
             <Route 
               path="/home"
-              component={About}
-            />
-            <Route 
-              path="/home"
               component={Home}
-            /> */}
+            />
           </div>
         </BrowserRouter>
       </div>

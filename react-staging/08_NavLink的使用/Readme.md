@@ -1,0 +1,3 @@
+NavLink的使用：
+主要是可以自定义class类名
+用NavLink，会自动给当前选中的link增加一个active类名，active可以自定义，设置属性 activeClassName="active"

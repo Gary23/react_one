@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { Switch, BrowserRouter, Route } from 'react-router-dom'
+import { NavLink, BrowserRouter, Route } from 'react-router-dom'
 import About from './pages/about'
 import Home from './pages/home'
-import MyNavLink from './components/MyNavLink'
 import './App.css'
 
 export default class App extends Component {
@@ -22,36 +21,18 @@ export default class App extends Component {
           <div className="row">
             <div className="col-xs-2 col-xs-offset-2">
               <div className="list-group">
-                <MyNavLink className="list-group-item" to="/about">About</MyNavLink>
-                <MyNavLink className="list-group-item" to="/home">Home</MyNavLink>
+                <NavLink activeClassName="active" className="list-group-item" to="/about">About</NavLink>
+                <NavLink activeClassName="active" className="list-group-item" to="/home">Home</NavLink>
               </div>
             </div>
-            <Switch>
-              <Route 
-                path="/about"
-                component={About}
-              />
-              <Route 
-                path="/home"
-                component={About}
-              />
-              <Route 
-                path="/home"
-                component={Home}
-              />
-            </Switch>
-            {/* <Route 
+            <Route 
               path="/about"
               component={About}
             />
             <Route 
               path="/home"
-              component={About}
-            />
-            <Route 
-              path="/home"
               component={Home}
-            /> */}
+            />
           </div>
         </BrowserRouter>
       </div>
