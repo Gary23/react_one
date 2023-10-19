@@ -1,0 +1,6 @@
+14 嵌套路由
+二级路由
+改造一下Home组件
+Home目录下，新建News组件和Message组件，把route_pages2的对应列表内容放到组件中，News和Message的导航放到Home组件内
+二级路由的to属性，要携带一级路由的路径，比如这里要在/home的基础上写
+

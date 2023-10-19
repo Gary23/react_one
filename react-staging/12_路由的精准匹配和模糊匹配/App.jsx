@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Redirect, BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 import About from './pages/about'
 import Home from './pages/home'
 import MyNavLink from './components/MyNavLink'
@@ -22,10 +22,19 @@ export default class App extends Component {
           <div className="row">
             <div className="col-xs-2 col-xs-offset-2">
               <div className="list-group">
+                {/* 可以匹配到 /about 路由组件 */}
+                {/* <MyNavLink className="list-group-item" to="/about/a/b">About</MyNavLink> */}
+                {/* 不能匹配到 /about 路由组件 */}
+                {/* <MyNavLink className="list-group-item" to="/a/b/about">About</MyNavLink> */}
                 <MyNavLink className="list-group-item" to="/about">About</MyNavLink>
                 <MyNavLink className="list-group-item" to="/home">Home</MyNavLink>
               </div>
             </div>
+            {/* 匹配不到 /about */}
+            {/* <Route 
+              path="/about/a/b"
+              component={About}
+            /> */}
             <Route 
               path="/about"
               component={About}
@@ -34,7 +43,6 @@ export default class App extends Component {
               path="/home"
               component={Home}
             />
-            <Redirect to="/home" />
           </div>
         </BrowserRouter>
       </div>

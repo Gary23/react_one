@@ -1,28 +1,27 @@
-11 解决样式丢失
-path写多级目录  比如/abc/about   /abc/home
-切换路由后，刷新后样式会丢失，证明bootstrap没有加载成功
+15 向路由组件传递params参数
 
-路由路径是多级的话，刷新后会去找第一级的地址(/abc)去找资源，所以bootstrap会找不到
-./bootstrap.css 要改为 /bootstrap.css 或者 %PUBLIC_URL%/bootstrap.css
+增加三级路由组件，message列表点击后展示列表的详情信息，并且让message组件的列表动态生成
+message组件下新建detail组件放详情数据，数据来源是message列表的数据
+detail中写假数据，根据列表的传参展示对应的数据
+
+2种方式
+1、params：
+传参：Link直接在url路径后面拼接参数 /${参数值1}/${参数值2}  
+接收：Route在路径后用 :参数名1/:参数名2 
+获取：在路由组件中就可以用props.match.params来获取
 
 
-12 路由的精准匹配和模糊匹配
-默认模糊匹配
-a、to属性 /home/a/b 可以匹配到path的 /home
-b、to属性的 /home 不能匹配到path的 /home/a/b
-c、to属性的 /a/b/home 不能匹配到path的 /home
-在a过程中，to会解析为 home a b 三个路径，而path按照顺序匹配到了home，所以可以匹配上
-配置精准匹配：
-to属性的路径必须和path的路径完全一样
-在Route组件写exact属性
+2、search
+传参：Link直接在url路径后面拼接参数 /?属性名1=${参数值1}&属性名2=${参数值2}
+接收：无需接收
+获取：在路由组件中就可以用props.location.search获取，获取的是urlencoded字符串（key=value&key=value），使用querystring（qs）转为对象   qs.stringify可以把对象转为urlencoded字符串，qs.parse可以把urlcoded字符串转为对象，这里用的时候要去掉开头的?
 
-13 Redirect
-重定向组件，主要用于进入首页后重定向到一个路径
-Redirect可以给所有Route组件兜底，就是所有path都没有匹配上，最后会展示Redirect的组件（to属性指定一个兜底路径）
+3、state参数
+这个state和组件的state状态对象没有任何关系
+传参：to参数需要传一个对象to={{ pathname: '路径', state: { key:value, key:value } }}
+接收：无需接收
+获取：在路由组件中就可以用props.location.state获取，
+state的方式虽然url上没有体验参数，但是刷新后也不会清理state数据，会保存在history对象中，但是清理浏览器缓存后，就获取不到了，所以用state要判断获取不到数据的场景，state如果不传默认的值是undefined
 
-14 嵌套路由
-二级路由
-改造一下Home组件
-Home目录下，新建News组件和Message组件，把route_pages2的对应列表内容放到组件中，News和Message的导航放到Home组件内
-二级路由的to属性，要携带一级路由的路径，比如这里要在/home的基础上写
 
+detail组件中根据传入的title和id，获取数据并展示
