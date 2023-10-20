@@ -29,7 +29,7 @@ export default class Message extends Component {
               this.state.list.map(item => {
                 return (
                   <li key={item.id}>
-                    <MyNavLink to={{pathname: '/home/message/detail', state: {id: item.id, title: item.title}}}>{ item.title }</MyNavLink>&nbsp;&nbsp;
+                    <MyNavLink to={`/home/message/detail/?id=${item.id}&title=${item.title}`}>{ item.title }</MyNavLink>&nbsp;&nbsp;
                   </li>
                 )
               })
