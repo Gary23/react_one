@@ -3,7 +3,6 @@ import { Redirect, BrowserRouter, Route } from 'react-router-dom'
 import About from './pages/about'
 import Home from './pages/home'
 import MyNavLink from './components/MyNavLink'
-import Header from './components/Header'
 import './App.css'
 
 export default class App extends Component {
@@ -15,7 +14,11 @@ export default class App extends Component {
     return (
       <div>
         <BrowserRouter>
-          <Header />
+          <div className="row">
+            <div className="col-xs-offset-2 col-xs-8">
+              <div className="page-header"><h2>React Router Demo</h2></div>
+            </div>
+          </div>
           <div className="row">
             <div className="col-xs-2 col-xs-offset-2">
               <div className="list-group">

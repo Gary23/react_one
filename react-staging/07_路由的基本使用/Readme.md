@@ -32,5 +32,17 @@ Router分两种，BrowserRouter和HashRouter，  这里使用BrowserRouter标签
 路由组件：参数靠路由传入，接收三个固定属性history: { go, goBack, goForward, push, replace }、match: { match, path, url }、location: { pathname, search, state }
 
 
+18 BrowserRouter与HashRouter的区别
+1、底层原理不一样：
+  BR使用的是H5的history API 不兼容IE9及以下版本
+  HR使用的是URL的哈希值
+2、url的表现形式不一样
+  BR的路径中没有#
+  HR的路径中有#
+3、刷新后路由对state参数的影像（一种路由的传参方式）
+  BR没有任何影响，因为state保存在history对象中
+  HR不使用history，所以没法保存state数据
+
+
 
 
