@@ -1,38 +1,33 @@
 import React, { Component } from 'react'
-import store from '../../redux/store'
+
 export default class Count extends Component {
-  // state = {
-  //   count: 0
-  // }
+  state = {
+    count: 0
+  }
   add = () => {
     const { value } = this.countSelect
-    store.dispatch({type: 'add', data: value * 1})
-    // this.setState({count: this.state.count + value * 1})
+    this.setState({count: this.state.count + value * 1})
   }
   decrease = () => {
     const { value } = this.countSelect
-    store.dispatch({type: 'decrease', data: value * 1})
-    // this.setState({count: this.state.count - value * 1})
+    this.setState({count: this.state.count - value * 1})
   }
   oddAdd = () => {
     const { value } = this.countSelect
-    const count = store.getState()
-    if (count % 2 !== 0) {
-      // this.setState({count: this.state.count + value * 1})
-      store.dispatch({type: 'add', data: value * 1})
+    if (this.state.count % 2 !== 0) {
+      this.setState({count: this.state.count + value * 1})
     }
   }
   asyncAdd = () => {
     const { value } = this.countSelect
     setTimeout(() => {
-      store.dispatch({type: 'add', data: value * 1})
-      // this.setState({count: this.state.count + value * 1})
+      this.setState({count: this.state.count + value * 1})
     }, 500)
   }
   render() {
     return (
       <div>
-        <h1>Current Sum: { store.getState() }</h1>
+        <h1>Current Sum: { this.state.count }</h1>
         <select name="countSelect" ref={ c => this.countSelect = c }>
           <option value="1">1</option>
           <option value="2">2</option>
