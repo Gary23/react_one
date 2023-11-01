@@ -1,19 +1,17 @@
 import React, { Component } from 'react'
 import store from '../../redux/store'
-import { addAction, decreaseAction, addAsyncAction } from '../../redux/count_action'
-
 export default class Count extends Component {
   // state = {
   //   count: 0
   // }
   add = () => {
     const { value } = this.countSelect
-    store.dispatch(addAction(value * 1))
+    store.dispatch({type: 'add', data: value * 1})
     // this.setState({count: this.state.count + value * 1})
   }
   decrease = () => {
     const { value } = this.countSelect
-    store.dispatch(decreaseAction(value * 1))
+    store.dispatch({type: 'decrease', data: value * 1})
     // this.setState({count: this.state.count - value * 1})
   }
   oddAdd = () => {
@@ -21,15 +19,15 @@ export default class Count extends Component {
     const count = store.getState()
     if (count % 2 !== 0) {
       // this.setState({count: this.state.count + value * 1})
-      store.dispatch(addAction(value * 1))
+      store.dispatch({type: 'add', data: value * 1})
     }
   }
   asyncAdd = () => {
     const { value } = this.countSelect
-    // setTimeout(() => {
-    store.dispatch(addAsyncAction(value * 1))
+    setTimeout(() => {
+      store.dispatch({type: 'add', data: value * 1})
       // this.setState({count: this.state.count + value * 1})
-    // }, 500)
+    }, 500)
   }
   render() {
     return (

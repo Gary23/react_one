@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import store from '../../redux/store'
-import { addAction, decreaseAction, addAsyncAction } from '../../redux/count_action'
+import { addAction, decreaseAction  } from '../../redux/count_action'
 
 export default class Count extends Component {
   // state = {
@@ -26,10 +26,10 @@ export default class Count extends Component {
   }
   asyncAdd = () => {
     const { value } = this.countSelect
-    // setTimeout(() => {
-    store.dispatch(addAsyncAction(value * 1))
+    setTimeout(() => {
+      store.dispatch(addAction(value * 1))
       // this.setState({count: this.state.count + value * 1})
-    // }, 500)
+    }, 500)
   }
   render() {
     return (
