@@ -2,29 +2,28 @@ import React, { Component } from 'react'
 export default class Count extends Component {
 
   add = () => {
-    const { value } = this.countSelect
-    this.props.jia(value * 1)
+    // const { value } = this.countSelect
+    // store.dispatch(addAction(value * 1))
   }
   decrease = () => {
-    const { value } = this.countSelect
-    this.props.jian(value * 1)
+    // const { value } = this.countSelect
+    // store.dispatch(decreaseAction(value * 1))
   }
   oddAdd = () => {
-    const { value } = this.countSelect
-    const { count } = this.props
-    if (count % 2 !== 0) {
-      this.props.jia(value * 1)
-    }
+    // const { value } = this.countSelect
+    // const count = store.getState()
+    // if (count % 2 !== 0) {
+      // this.setState({count: this.state.count + value * 1})
+    // }
   }
   asyncAdd = () => {
-    const { value } = this.countSelect
-    this.props.jiaAsync(value * 1)
+    // const { value } = this.countSelect
+    // store.dispatch(addAsyncAction(value * 1))
   }
   render() {
-    console.log('this.props', this.props);
     return (
       <div>
-        <h1>Current Sum: { this.props.count }</h1>
+        {/* <h1>Current Sum: { store.getState() }</h1> */}
         <select name="countSelect" ref={ c => this.countSelect = c }>
           <option value="1">1</option>
           <option value="2">2</option>

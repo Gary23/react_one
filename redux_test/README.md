@@ -91,5 +91,63 @@ action除了是Object类型，还可以是Function类型，其中dispatch处理O
    - 异步action使用，dispatch只能接收redux-thunk转换过的函数，添加中间件的操作需要在store中完成
    - 调用createStore创建store增加第二个参数，调用applyMiddleware，并给applyMiddleware传参redux-thunk
 
+### 05_react-redux容器及组件和UI组件连接
 
+在react-redux中，组件分为容器组件和ui组件，在demo中将容器组件统一放置到新建的containers目录
+
+1. containers/count组件
+   - 引入components/count这个ui组件
+   - 引入react-react的connec方法
+   - 调用connect函数的返回值就能得到一个容器组件，需要传入ui组件。`connect()(CountUI)`，注意这里是调用connect的返回值，也就是调用两次
+   - 最后抛出这个容器及组件
+
+2. App组件
+   - 引入containers/count容器组件
+   - 引入redux/store文件，传入Count容器组件
+
+3. components/count组件
+   - 暂时删除所有和store相关的内容
+
+### 06_react-redux基本使用
+
+1. containers/count组件
+   - 引入所有redux/count_action.js的方法
+   - 调用connect需要传两个参数，用于给ui组件传值，两个参数都需要return一个Object，ui组件通过props接收传参
+   - 第一个参数是state的映射mapStateTpProps，接收state参数，就是store.getStore()的返回值
+   - 第二个参数是dispatch的映射mapDispatchToProps，接收dispatch参数，就是store的dispatch方法，dispatch内部依然是传入action
+   - mapDispatchToProps参数的类型可以是一个函数也可以是一个对象，函数内部需要手动调用dispatch，如果是对象，可以直接写action，redux内部去执行了dispatch操作
+
+3. components/count组件
+   - 将删除的从store调用的方法和获取的状态，改为从props调用和获取
+   - 实际上对ui组件来说，使用react-redux只是修改了一下调用了api的名称，react-redux的主要逻辑都在容器组件
+
+### 优化
+
+容器组件优化
+
+都优化为箭头函数，并且直接写匿名函数
+
+connect改变传参，第二个参数直接写对象，值就是action函数体，这样直接在ui组件调用，和原来的区别就是不需要在容器组件手动dispatch，react-redux内部可以执行dispatch
+
+
+
+index.js
+
+写了store.subscribe监听
+
+用了react-redux 不需要这个监听，render ui组件是容器组件的能力之一，也就是connect实现的
+
+
+App组件
+
+目前给容器组件穿了store，可以优化为在index引入store   还有从react-redux引入Provider
+
+把store交给provider<Provider><App /></Provider>
+
+
+文件层面优化
+
+一个jsx可以写多个组件，只是最后只抛出一个
+
+ui组件可以写在容器组件里
 
