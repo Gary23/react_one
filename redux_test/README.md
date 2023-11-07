@@ -113,41 +113,69 @@ action除了是Object类型，还可以是Function类型，其中dispatch处理O
 1. containers/count组件
    - 引入所有redux/count_action.js的方法
    - 调用connect需要传两个参数，用于给ui组件传值，两个参数都需要return一个Object，ui组件通过props接收传参
-   - 第一个参数是state的映射mapStateTpProps，接收state参数，就是store.getStore()的返回值
-   - 第二个参数是dispatch的映射mapDispatchToProps，接收dispatch参数，就是store的dispatch方法，dispatch内部依然是传入action
-   - mapDispatchToProps参数的类型可以是一个函数也可以是一个对象，函数内部需要手动调用dispatch，如果是对象，可以直接写action，redux内部去执行了dispatch操作
+   - 第一个参数是state的映射mapStateTpProps，接收state参数，就是store.getStore()的返回值，mapStateTpProps返回需要传入ui组件的参数
+   - 第二个参数是dispatch的映射mapDispatchToProps，接收dispatch参数，就是store的dispatch方法，dispatch内部依然是传入action，mapDispatchToProps返回需要传入ui组件的方法
 
 3. components/count组件
    - 将删除的从store调用的方法和获取的状态，改为从props调用和获取
    - 实际上对ui组件来说，使用react-redux只是修改了一下调用了api的名称，react-redux的主要逻辑都在容器组件
 
-### 优化
+### 07_react-redux基本使用优化
 
-容器组件优化
+1. containers/count组件组件优化
+   - 都改为匿名函数且使用箭头函数的写法
+   - connect改变传参，第二个参数(mapDispatchToProps)直接写Object，value就是action函数体，react-redux内部会去执行了dispatch操作
 
-都优化为箭头函数，并且直接写匿名函数
+2. index.js
+   - 不再需要store的subscribe监听，render组件是react-redux的能力之一，通过connect实现的
+   - 管理store，引入store、从react-redux引入Provider标签，嵌套App组件，并把store传入Provider标签，这样就相当于全局引入就不需要在后面的组件引入了
 
-connect改变传参，第二个参数直接写对象，值就是action函数体，这样直接在ui组件调用，和原来的区别就是不需要在容器组件手动dispatch，react-redux内部可以执行dispatch
+3. App组件
+   - 删除store的引入及传参 
+
+4. 文件层面优化
+   - 删除components目录下的count组件，把这个ui组件的内容放到容器组件中，最终只抛出一个容器组件就可以
+
+### 08_多个组件使用react-redux
+
+新建actions 和 reducers 目录  分别存放不同组件的文件
+
+store整个应用只有一个
+
+修改count组件对于redux的引用位置
+
+新建另外一个容器组件 person
+
+引用到count后面，分别加标题区分
 
 
 
-index.js
+person组件：
 
-写了store.subscribe监听
+两个输入框  姓名  年龄
 
-用了react-redux 不需要这个监听，render ui组件是容器组件的能力之一，也就是connect实现的
+按钮添加
+
+列表展示填写的姓名和年龄
+
+结合redux
+
+contast增加add_person常量
+
+新建action 引入常量  创建抛出action  包含姓名和年龄
+
+新建reducers 创建抛出函数，初始化一个数组，判断type，每次把新数据追加到上次的数组中
 
 
-App组件
 
-目前给容器组件穿了store，可以优化为在index引入store   还有从react-redux引入Provider
+安装nanoid  生成id
 
-把store交给provider<Provider><App /></Provider>
+ store中引入person的reducers
+
+在redux只有count的时候，可以只用getState获取，现在多个值，就需要给每个数据一个key
+
+所以createStore中的传参是一个key value的对象，从redux中引入combineReducers，用于汇总reducers，调用用这个方法传入一个对象，这个对象就是redux保存的所有状态对象
 
 
-文件层面优化
 
-一个jsx可以写多个组件，只是最后只抛出一个
-
-ui组件可以写在容器组件里
-
+修改原来的getState，原来可以直接获取count的值，所以要修改count容器组件的connect的第一个传参 state.count
