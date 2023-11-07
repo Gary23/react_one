@@ -1,4 +1,4 @@
-import { ADD, DECREASE } from './constant.js'
+import { ADD, DECREASE } from '../constant.js'
 
 const initCount = 0
 const countReducer = (preState = initCount, action) => {

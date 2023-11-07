@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { addAction, addAsyncAction, decreaseAction } from '../../redux/count_action'
+import { addAction, addAsyncAction, decreaseAction } from '../../redux/actions/count.js'
 
 class CountUI extends Component {
 
@@ -27,7 +27,8 @@ class CountUI extends Component {
     console.log('this.props', this.props);
     return (
       <div>
-        <h1>Current Sum: { this.props.count }</h1>
+        <h1>count组件</h1>
+        <h3>Current Sum: { this.props.count }</h3>
         <select name="countSelect" ref={ c => this.countSelect = c }>
           <option value="1">1</option>
           <option value="2">2</option>
@@ -47,14 +48,7 @@ class CountUI extends Component {
 }
 
 export default connect(
-  // mapStateTpProps
-  state => ({ count: state }),
-  // mapDispatchToProps 可以返回一个函数，也可以直接返回一个对象
-  // dispatch => ({
-  //   jia: number => dispatch(addAction(number)),
-  //   jian: number => dispatch(decreaseAction(number)),
-  //   jiaAsync: number => dispatch(addAsyncAction(number)),
-  // })
+  state => ({ count: state.count }),
   {
     jia: addAction,
     jian: decreaseAction,

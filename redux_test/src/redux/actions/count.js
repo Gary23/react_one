@@ -1,4 +1,4 @@
-import { ADD, DECREASE } from './constant.js'
+import { ADD, DECREASE } from '../constant.js'
 
 export const addAction = value => ({ type: ADD, data: value })
 export const addAsyncAction = (value) => {

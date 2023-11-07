@@ -138,44 +138,14 @@ action除了是Object类型，还可以是Function类型，其中dispatch处理O
 
 ### 08_多个组件使用react-redux
 
-新建actions 和 reducers 目录  分别存放不同组件的文件
+1. 新建person组件
+   - 新建containers/person组件，先在组件内部不使用react-redux实现功能，输入框输入内容，添加到数据在列表展示
 
-store整个应用只有一个
-
-修改count组件对于redux的引用位置
-
-新建另外一个容器组件 person
-
-引用到count后面，分别加标题区分
-
-
-
-person组件：
-
-两个输入框  姓名  年龄
-
-按钮添加
-
-列表展示填写的姓名和年龄
-
-结合redux
-
-contast增加add_person常量
-
-新建action 引入常量  创建抛出action  包含姓名和年龄
-
-新建reducers 创建抛出函数，初始化一个数组，判断type，每次把新数据追加到上次的数组中
-
-
-
-安装nanoid  生成id
-
- store中引入person的reducers
-
-在redux只有count的时候，可以只用getState获取，现在多个值，就需要给每个数据一个key
-
-所以createStore中的传参是一个key value的对象，从redux中引入combineReducers，用于汇总reducers，调用用这个方法传入一个对象，这个对象就是redux保存的所有状态对象
-
-
-
-修改原来的getState，原来可以直接获取count的值，所以要修改count容器组件的connect的第一个传参 state.count
+2. person结合react-redux
+   - 新建 actions 和 reducers 目录，分别存放count和person组件的action和reducer文件
+   - 修改count相关的action和reducer引用路径
+   - contast增加addPerson常量
+   - actions/person文件，新增addPersonAction方法返回action对象
+   - reducers/person文件，新增personReducer方法返回加工后的personList
+   - store中引入reducers/person，原来store只有一个countReducer，可以直接传入createStore，现在有多个reducer，需要组合reducer数据。引入react-redux的combineReducers函数，调用combineReducers组合count和person的reducer加工后数据，combineReducers方法组合后将返回值传入createStore，这样之后
+   - 多个组件使用redux之后，store.getState方法就会返回一个对象而不是原来的count，containers/count中connect的传参修改为state.count
