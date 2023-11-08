@@ -14,7 +14,7 @@ class PersonUI extends Component {
     console.log('this.props', this.props);
     return (
       <div>
-        <h1>person组件，求和：{ this.props.count }</h1>
+        <h1>person组件</h1>
         <input type="text" ref={node => this.nodeName = node} />
         &nbsp;&nbsp;
         <input type="text" ref={node => this.nodeAge = node} />
@@ -37,10 +37,7 @@ class PersonUI extends Component {
 }
 
 export default connect(
-  state => ({ 
-    count: state.count,
-    personList: state.personList 
-  }),
+  state => ({ personList: state.personList }),
   {
     addPerson: addPersonAction
   }

@@ -149,3 +149,20 @@ action除了是Object类型，还可以是Function类型，其中dispatch处理O
    - reducers/person文件，新增personReducer方法返回加工后的personList
    - store中引入reducers/person，原来store只有一个countReducer，可以直接传入createStore，现在有多个reducer，需要组合reducer数据。引入react-redux的combineReducers函数，调用combineReducers组合count和person的reducer加工后数据，combineReducers方法组合后将返回值传入createStore，这样之后
    - 多个组件使用redux之后，store.getState方法就会返回一个对象而不是原来的count，containers/count中connect的传参修改为state.count
+
+
+### 09_组件间共享数据
+
+组件之间可以共享redux保存的数据，在容器组件中，connect的mapStateTpProps中的参数state对象就是redux中所有的数据，可以从state中获取对应的数据传给ui组件即可
+
+> reducers的return值  如果和上次一样就不会更新了，特别要注意对象和数组
+
+### 10_redux开发者工具
+
+可以安装浏览器扩展Redux DevTools，查看redux的数据
+
+项目代码里也需要安装引入,安装redux-devtools-extension
+
+在store中引用redux-devtools-extension的composeWithDevTools方法，将返回值传入createStore的第二个参数
+
+> 如果createStoee没有第二个参数，可以直接调用，如果写了第二个参数，那需要把原来的第二个参数传参给composeWithDevTools方法

@@ -28,7 +28,7 @@ class CountUI extends Component {
     return (
       <div>
         <h1>count组件</h1>
-        <h3>求和: { this.props.count }，总人数：{ this.props.personList.length }</h3>
+        <h3>Current Sum: { this.props.count }</h3>
         <select name="countSelect" ref={ c => this.countSelect = c }>
           <option value="1">1</option>
           <option value="2">2</option>
@@ -48,10 +48,7 @@ class CountUI extends Component {
 }
 
 export default connect(
-  state => ({ 
-    count: state.count, 
-    personList: state.personList
-  }),
+  state => ({ count: state.count }),
   {
     jia: addAction,
     jian: decreaseAction,
