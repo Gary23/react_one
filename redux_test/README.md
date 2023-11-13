@@ -166,3 +166,6 @@ action除了是Object类型，还可以是Function类型，其中dispatch处理O
 在store中引用redux-devtools-extension的composeWithDevTools方法，将返回值传入createStore的第二个参数
 
 > 如果createStoee没有第二个参数，可以直接调用，如果写了第二个参数，那需要把原来的第二个参数传参给composeWithDevTools方法
+
+reducers目录下新建index.js，归总所有reducers统一抛出，在store中统一导入，在index.js中需要把所有加工的工作操作完成，所以combineReducers也在index.js中调用
+
