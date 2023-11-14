@@ -1,4 +1,4 @@
-### setState
+### 01_setState
 
 创建一个简单的求和demo
 
@@ -12,7 +12,7 @@
    - updater是一个函数，返回changeState对象，updater可以接收state和props
    - 对象式的写法实际是函数式的一个语法糖，如果setState的数值依赖于原state可以使用函数式setState写法
 
-### lazyLoad
+### 02_lazyLoad
 
 懒加载组件，通常用作路由组件的懒加载，路由组件会在主页打开就全部请求，进入路由组件时不会再发送任何请求，懒加载组件的作用就是按需请求，不在主页请求回所有组件
 
@@ -21,7 +21,7 @@
 - 引入组件的写法由 `import xx from 'xxxx'` 改为 `const xxx = lazy(() => import('xxxxxx'))` 
 - 需要指定一个加载中的dom元素，从react引入Suspense组件，用Suspense组件去嵌套所有懒加载的路由组件，在Suspense组件中传入failback属性，属性的值是加载中要展示的dom元素，可以直接传入一个单独的加载中的组件
 
-### hooks
+### 03_hooks
 
 react 16.8版本新增加的特性，因为函数式组件中的this不能指向实例对象，所以this是undefined，导致函数式组件不能通过this获取到state和props等，react16.8之后通过hooks，就可以让函数式组件也可以访问到当前实例对象
 
@@ -47,6 +47,68 @@ react 16.8版本新增加的特性，因为函数式组件中的this不能指向
    - 求和案例增加一个输入框，点击弹出提示按钮就alert输入框的内容，如果是类式组件，可以通过给input绑定ref，在点击按钮通过this.ref来获取value
    - 函数式组件通过React.useRef绑定，`const inputRef = React.useRef()`，在input绑定这个inputRef `ref={inputRef}`
    - React.useRef实际和React.createRef是一样的功能
+
+### 04_Fragment标签
+
+Fragment标签不会渲染为真实dom元素，它有两种使用场景
+
+1. 用作组件根元素
+   - 组件必须使用一个根标签嵌套，但是如果不想让这个根标签渲染为真实dom，可以用`<Fragment></Fragment>`嵌套整个组件的元素
+
+2. 用于遍历元素
+   - 遍历元素时，也需要一个根元素嵌套，这个元素也可以使用Fragment
+   - 遍历元素时，可以给Fragment标签传参一个key值，Fragment标签只能接收这一个参数
+
+### 05_context
+
+context是一种组件间的通讯方式，用于组件与后代组件的通信
+
+1. Parent组件
+   - Parent最外层组件，层级是`Parent > Child > Grand`，如果Parent要向Grand组件传值就可以用到context
+   - 从react引入createContext方法创建context标签：`const MyContext = createContext()`
+   - 使用`<MyContext.Provider></MyContext.Provider>`嵌套Child组件，这样Child及其之后的组件都可接收到context对象，MyContext.Provider标签可以传入一个value参数，之后的组件接收的就是value传入的值
+
+2. Child组件、Grand组件
+   - 需要声明接收：`static contextType = MyContext`，声明后会将MyContext的value注入到当前组件的context对象中
+   - 通过`this.context`就可以访问context数据
+   - 函数式组件可以通过`<MyContext.Consumer>{ value => {} }</MyContext.Consumer>`获取到context，标签中是一个回调函数，value接收MyContext.Provider的value传参，return需要创建的元素
+
+### 06_PureComponent
+
+PureComponent类内部实现了shouldComponentUpdate钩子的比对，普通的组件不写shouldComponentUpdate会有以下问题：
+   - 只要调用了this.setState，就算传入空对象，都会触发组件render的重新调用
+   - 父组件只要调用了render，同时也会将所有子组件的render重新调用
+   - 原因是没有写shouldComponentUpdate钩子，所以默认每次更新控制都是返回默认值true
+
+使用shouldComponentUpdate的方式解决
+   - 在钩子判断哪些情况不需要调用render
+   - 使用setState的组件要判断nextState与当前state内部对应的数据是否修改，如果没有修改返回false
+   - 所有子组件除了state还要判断nextProps与当前props内部对应的数据是否修改，如果没有修改返回false
+   - shouldComponentUpdate的解决方式几乎不可用，因为state内的数据可能很多，子组件也可能很多
+
+PureComponent的方式解决
+   - 从react中引入PureComponent
+   - 基于PureComponent创建类，`class App extends PureComponent{}`
+   - PureComponent内部实现了类似shouldComponentUpdate钩子的比较逻辑，如果state或者props内部的数据和上次没有变化就不会调用render
+   - PureComponent有一个小问题，它只能进行浅比较，所以每次setState中的对象或数组，都要用字面量的写法，不能在原有引用地址上修改再传入setState
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
