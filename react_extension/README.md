@@ -92,23 +92,17 @@ PureComponent的方式解决
    - PureComponent内部实现了类似shouldComponentUpdate钩子的比较逻辑，如果state或者props内部的数据和上次没有变化就不会调用render
    - PureComponent有一个小问题，它只能进行浅比较，所以每次setState中的对象或数组，都要用字面量的写法，不能在原有引用地址上修改再传入setState
 
+### 07_renderProps
 
+- 父组件在子组件中写标签体内容，子组件可以通过`this.props.children`属性接收并直接展示
+- 如果给A组件传入的标签体是B组件，则B组件属于A组件的子组件，但是A组件不能直接给B组件传值，需要借助renderProps才可以实现
+- 在A组件传入一个render函数`<A render={ name => <B name={name} /> } ></A>`，这样在A组件render时候调用并传入name`return ( { this.props.render(this.state.name) } )`，B组件就可以正常在props接收name
 
+### 08_ErrorBoundary
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- 错误边界，把错误控制在组件内部，不要影响整个项目，在父组件，可以阻挡子组件的报错
+- 如果子组件在生命周期钩子中出现任何错误，都会调用父组件的getDerivedStateFromError钩子和componentDidCatch钩子，并且可以收到错误信息
+- getDerivedStateFromError需要使用static声明，因为它是在构造函数和实例属性初始化之前被调用
+- getDerivedStateFromError可以返回一个对象更新state中的状态，可以通过状态展示统一的错误处理组件
+- componentDidCatch是在浏览器绘制完组件之后被调用的，所以不需要声明static
+- componentDidCatch更多是用于统计错误次数上送给后台系统统计
