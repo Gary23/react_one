@@ -12,13 +12,12 @@
 - Navigate组件只要被渲染，就会触发试图的切换（Home组件的sum案例）
 - Navigate跳转可以用to属性追加模式，也可以用replace替换模式
 
-### 路由链接的高亮
+### 03_路由链接的高亮
 
-5版本是NavLink给加的active类名 可以用activeClassName修改  6版本是写一个className的回调函数，接收一个对象，isActive布尔值，判断后返回class类名
+- 5版本是NavLink给加的active类名，可以直接用activeClassName属性修改自定义的类名
+- 6版本className可以写一个回调函数，回调内接收一个对象，根据对象的isActive属性判断当前导航是否被选中
 
-
-
-路由表
+### 04_路由表
 
 调用useRoutes传入数组，将返回值放到原来routes的位置
 
