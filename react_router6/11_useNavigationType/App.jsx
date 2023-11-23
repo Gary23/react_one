@@ -1,9 +1,12 @@
 import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useInRouterContext } from 'react-router-dom';
 import Elements from './route'
 
 function App() {
   const navigate = useNavigate();
+
+  console.log('useInRouterContext',useInRouterContext())   // 返回true
+
   return (
     <div>
       <div>
@@ -14,7 +17,6 @@ function App() {
               <button onClick={ () => { navigate(1) } }>前进</button>
               &nbsp;&nbsp;&nbsp;&nbsp;
               <button onClick={ () => { navigate(-1) } }>后退</button>
-              {/* <button onClick={ () => { console.log('useResolvePath', useResolvePath()) } }>查看路径</button> */}
             </div>
           </div>
         </div>

@@ -14,7 +14,6 @@ function App() {
               <button onClick={ () => { navigate(1) } }>前进</button>
               &nbsp;&nbsp;&nbsp;&nbsp;
               <button onClick={ () => { navigate(-1) } }>后退</button>
-              {/* <button onClick={ () => { console.log('useResolvePath', useResolvePath()) } }>查看路径</button> */}
             </div>
           </div>
         </div>

@@ -1,7 +1,8 @@
 import React from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useOutlet } from 'react-router-dom'
 
 export default function Home() {
+  console.log('useOutlet-------', useOutlet())
   return (
     <div>
       <div className="col-xs-6">
