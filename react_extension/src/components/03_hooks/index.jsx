@@ -53,6 +53,7 @@ function Count() {
   }
 
   function show() {
+    console.dir(inputRef.current)
     alert(inputRef.current.value)
   }
 

@@ -47,6 +47,7 @@ react 16.8版本新增加的特性，因为函数式组件中的this不能指向
    - 求和案例增加一个输入框，点击弹出提示按钮就alert输入框的内容，如果是类式组件，可以通过给input绑定ref，在点击按钮通过this.ref来获取value
    - 函数式组件通过React.useRef绑定，`const inputRef = React.useRef()`，在input绑定这个inputRef `ref={inputRef}`
    - React.useRef实际和React.createRef是一样的功能
+   - 使用`inputRef.current`可以获取到DOM元素
 
 ### 04_Fragment标签
 
