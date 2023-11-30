@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Demo from './components/08_ErrorBoundary/Parnet'
+import Demo from './components/05_context/index.jsx'
 
 export default class App extends Component {
   render() {

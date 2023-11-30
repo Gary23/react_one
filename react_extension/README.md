@@ -37,6 +37,7 @@ react 16.8版本新增加的特性，因为函数式组件中的this不能指向
    - `React.useEffect(callback, [stateArray])`，useEffect第一个参数传入一个回调函数，初始化组件时会调用，只要任意state触发render就会调用回调。第二个参数是一个状态监听的数组，只有数组中有的state才会在render后执行回调，如果传入空数组，所有state触发render都不会调用回调
    - 如果第二个参数是空数组，就相当于类式组件的componentDidMount钩子，如果不传第二个参数就相当于componentDidUpdate钩子
    - 所以在这个功能中，将定时器写到useEffect的回调中，并且传入空数组
+   - useEffect最常用的方式是在组件渲染完毕后，立刻从服务器获取数据到页面中，数组中传入数据可以在数据变更后立即获取数据
 
 3. React.useEffect卸载组件
    - 求和案例增加卸载root根组件的按钮，点击后调用 ReactDOM.unmountComponentAtNode 卸载组件
@@ -73,6 +74,7 @@ context是一种组件间的通讯方式，用于组件与后代组件的通信
    - 需要声明接收：`static contextType = MyContext`，声明后会将MyContext的value注入到当前组件的context对象中
    - 通过`this.context`就可以访问context数据
    - 函数式组件可以通过`<MyContext.Consumer>{ value => {} }</MyContext.Consumer>`获取到context，标签中是一个回调函数，value接收MyContext.Provider的value传参，return需要创建的元素
+   - 如果使用hook可以使用useContext获取数据，`const value = useContext(MyContext)`
 
 ### 06_PureComponent
 

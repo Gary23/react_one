@@ -1,4 +1,4 @@
-import React, { Component, createContext } from 'react'
+import React, { Component, createContext, useContext } from 'react'
 import './index.css'
 const MyContext = createContext()
 
@@ -40,6 +40,7 @@ class Grand extends Component {
         <h4>Grand组件</h4>
         <p>username: { this.context.username }</p>
         <GrandFunction />
+        <GrandHook />
       </div>
     )
   }
@@ -59,6 +60,16 @@ function GrandFunction() {
         }
       }
     </MyContext.Consumer>
+  )
+}
+// 函数式组件使用 useContext hook
+function GrandHook() {
+  const value = useContext(MyContext)
+  return (
+    <div className="grand-func">
+      <h4>函数式Grand组件，使用hook的方式</h4>
+      <p>username: { value.username }</p>
+    </div>
   )
 }
 
