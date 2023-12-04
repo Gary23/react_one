@@ -42,31 +42,6 @@
 
 - 将评论列表封装单独的子组件，传入需要的数据
 
-受控表单绑定
-使用react组件的状态(state)控制表单的状态，input赋值给state，因为setState会触发试图更新，所以也触发了表单更新
-
-
-
-redux
-
-redux toolkit(rtk) 官方推荐,工具集合，简化写法
-
-@reduxjs/toolkit
-
-react redux 用来和react链接
-
-store/index  入口文件，配置组合store，抛出store对象
-
-store/modules/counterStore
-
-store/modules/channelStoee
-
-
-
-实现counter案例
-
-counterStore
-
 
 
 

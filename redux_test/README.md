@@ -169,3 +169,58 @@ action除了是Object类型，还可以是Function类型，其中dispatch处理O
 
 reducers目录下新建index.js，归总所有reducers统一抛出，在store中统一导入，在index.js中需要把所有加工的工作操作完成，所以combineReducers也在index.js中调用
 
+
+### 11_RTK_counter案例
+
+RTK：redux toolkit，官方推荐的工具集合简化redux的写法，安装：`npm i @reduxjs/toolkit`。
+
+整体流程是创建
+
+store/index  入口文件，配置组合store，抛出store对象
+
+
+
+store/modules/channelStoee
+
+
+
+实现
+
+counterStore
+
+
+1. redux/modules/counterStore
+   - 引入@reduxjs/toolkit的createSlice方法，调用并传参，调用后返回一个reducer函数
+   - createSlice配置传参一个Object，
+     - name: reducer的名称
+     - initialState：初始化state对象
+     - reducers：reducer作用是更新state的状态，在这里创建action方法，可以接收state参数，更新state内的数据。
+   - 从createSlice.actions获取action对象（reducers中定义的action）并导出，方便在组件中调用
+   - 导出createSlice返回的reducer函数，在store中使用
+
+2. redux/store
+   - 引入counterStore
+   - 引入@reduxjs/toolkit的configureStore方法，调用并传参，返回一个store对象
+   - configureStore配置传入一个Object
+     - reducer: 传入counterStore导出的reducer函数
+   - 导出configureStore返回的store对象，注入到项目的根组件
+
+3. index.js
+   - 引入redux/store
+   - 根目录的index文件，用react-redux的Provider标签嵌套App，注入store属性
+
+4. App.js组件使用redux数据
+   - 从react-redux引入useSelector
+   - 已获取count状态字段为例，使用：`const { count } = useSelector(state => state.counter.count)`
+
+5. App.js组件修改redux数据
+   - 从react-redux引入useDispatch
+   - 获取dispatch函数：`const dispatch = useDispatch()`
+   - 引入counterStore导出的action方法并传参给dispatch：`dispatch(actionName(传参))`
+   - counterStore的action方法使用action.payLoad接收参数
+      ```js
+      incement (state, action) {
+         // 接收传参
+         console.log(action.payload)
+      }
+      ```
