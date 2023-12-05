@@ -170,24 +170,11 @@ action除了是Object类型，还可以是Function类型，其中dispatch处理O
 reducers目录下新建index.js，归总所有reducers统一抛出，在store中统一导入，在index.js中需要把所有加工的工作操作完成，所以combineReducers也在index.js中调用
 
 
-### 11_RTK_counter案例
+### 11_RTK_同步
 
 RTK：redux toolkit，官方推荐的工具集合简化redux的写法，安装：`npm i @reduxjs/toolkit`。
 
-整体流程是创建
-
-store/index  入口文件，配置组合store，抛出store对象
-
-
-
-store/modules/channelStoee
-
-
-
-实现
-
-counterStore
-
+整体流程是先创建reducer，在store中引入reducer组合并导出store，在项目根组件注入
 
 1. redux/modules/counterStore
    - 引入@reduxjs/toolkit的createSlice方法，调用并传参，调用后返回一个reducer函数
@@ -224,3 +211,15 @@ counterStore
          console.log(action.payload)
       }
       ```
+
+### 12_RTK_异步
+
+1. redux/modules/channelStore
+   - 需要声明一个高阶函数，返回一个异步函数体，函数体内进行数据请求，调用action函数将异步返回的数据传入进行dispatch
+   - 最后需要导出这个高阶函数，不需要再导出action函数了
+
+2. App.js
+   - 使用还是useSelector钩子
+   - 在useeffect钩子内获取数据，使用dispatch，调用channelStore导出的高阶函数
+
+
