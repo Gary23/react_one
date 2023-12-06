@@ -41,23 +41,15 @@
 1. 控制列表渲染
   - RTK增加showCartVisible状态和setShowCartVisible action函数
   - Cart组件，在需要展示和隐藏的地方调用setShowCartVisible
-  - Cart组件，购物车列表和遮罩层根据showCartVisible判断是否展示
+  - Cart组件，购物车列表和遮罩层根据showCartVisible判断，修改类名展示和隐藏元素
   - Cart组件，用cartList渲染购物车列表
 
 2. 购物车增减逻辑实现
+  - RTK，新增addCount、reduceCount、clearCartList三个action函数
+  - clearCartList直接清空购物车
+  - addCount给购物车的项目累加count
+  - reduceCount如果项目的count大于1累减，如果等于1从数组中删除该项
+  - 所有清空和减项，需要考虑修改cartFalg和showCartVisible的状态
+  - 在Cart组件中调用addCount、reduceCount、clearCartList
 
-增减两个action，根据id传参找到当前修改项，count组件增加方法传参，控制减最低值
 
-清空购物车，清空action
-
-
-
-控制购物车显示隐藏
-
-点击统计区域显示购物车列表，有购物车数据才显示
-
-点击蒙层区域购物车列表消失
-
-通过状态控制
-
-类名visible

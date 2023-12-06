@@ -8,7 +8,6 @@ const foodStore = createSlice({
     activeIndex: 0,
     cartList: [],
     cartFlag: false,
-    count: 0,
     showCartVisible: false
   },
   reducers: {
