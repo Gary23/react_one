@@ -1,8 +1,9 @@
 import classNames from 'classnames'
+import { useSelector } from 'react-redux' 
 import './index.scss'
 
-const Menu = (props) => {
-  const { foodList } = props
+const Menu = () => {
+  const { foodList } = useSelector(state => state.foods)
   const menus = foodList.map(item => ({ tag: item.tag, name: item.name }))
 
   return (

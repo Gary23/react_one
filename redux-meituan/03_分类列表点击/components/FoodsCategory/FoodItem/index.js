@@ -1,5 +1,3 @@
-import { useDispatch } from 'react-redux' 
-import { setCartList } from '../../../store/modules/foodsStore'
 import './index.scss'
 
 const Foods = ({
@@ -15,8 +13,6 @@ const Foods = ({
   tag,
   count
 }) => {
-
-  const dispatch = useDispatch() 
 
   return (
     <dd className="cate-goods">
@@ -42,19 +38,7 @@ const Foods = ({
             {price}
           </div>
           <div className="goods-count">
-            <span className="plus" onClick={ () => { dispatch(setCartList({
-              id,
-              picture,
-              name,
-              unit,
-              description,
-              food_tag_list,
-              month_saled,
-              like_ratio_desc,
-              price,
-              tag,
-              count
-            })) } }></span>
+            <span className="plus"></span>
           </div>
         </div>
       </div>

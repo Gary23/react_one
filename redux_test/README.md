@@ -15,22 +15,26 @@
 ### 三个核心概念
 
 1. action
-   - 动作的对象
+   - 一个动作对象，用来描述想怎么改数据，在某些场景也可以是一个函数类型
    - 包含两个属性
     type 标识属性，值为字符串
     data 数据属性 值是任意类型
 
 2. reducer
-   - 用于初始化状态，加工状态
+   - 一个函数，用于初始化状态，加工状态，根据action对象的描述生成一个新的状态数据
    - 加工时，根据旧的state和action，产生新的state的纯函数
 
 3. store
-   - 将state action reducer联系在一起的对象
+   - 一个对象，将state action reducer联系在一起的对象
+   - 使用createStore函数传入reducer函数，创建一个store
+   - store的subscribe方法订阅数据变化
+   - store的dispatch提交action对象触发reducer状态数据变化
+   - store的getState方法获取状态数据更新到视图
 
 
 ### 01_求和案例
 
-首先不使用redux来写一个求和按钮**1_原始版求和**
+首先不使用redux来写一个求和按钮**01_原始版求和**
 
 页面要素：求和的值、下拉框可选择数字、加号按钮、减号按钮、和为奇数才触发加法的按钮、异步的加号按钮
 四个按钮分别触发不同的事件计算求和的值，求和的值使用state.count，每次通过setState更新count的值
@@ -38,7 +42,7 @@
 
 ### 02_精简版redux的写法
 
-精简版先不写action，只写必要的store和reducers
+精简版先不写action，只写必要的store和reducer
 
 基于求和案例，创建redux目录  创建store.js  count_reducers.js
 
@@ -49,7 +53,7 @@
    - 调用creatStore并传入count_reducers
 
 2. count_reducers.js
-   - 该文件是用于创建一个count组件的reducers，本质是一个函数接收两个参数(preState，action)，初始化状态和加工状态
+   - 该文件是用于创建一个count组件的reducer，本质是一个函数接收两个参数(preState，action)，初始化状态和加工状态
    - 参数preState是更新前的状态值
    - 参数action是一个对象，包含type和data
    - 获取action对象的type和data
@@ -82,9 +86,9 @@
 action除了是Object类型，还可以是Function类型，其中dispatch处理Object类型只能同步执行，如果需要异步执行，需要将异步操作包装在一个函数中，所以Function类型通常用做异步执行
 
 1. count_action.js
-   - 新建一个action函数，return一个函数体，函数体内实现异步操作
+   - 新建一个action高阶函数，return一个函数体，函数体内实现异步操作
    - dispatch只能接收redux-thunk转换后的Function类型，redux-thunk是一个中间件，它的作用是把一个异步操作包装在一个函数中，并在适当的时候调用
-   - return的函数体会接受到一个dispatch本身作为参数，异步结束后调用dispatch函数来设置状态
+   - return的函数体会接收到一个dispatch函数作为参数，异步结束后调用dispatch函数来设置状态
 
 2. store.js
    - 从store中引入applyMiddleware，再引入redux-thunk。
@@ -167,17 +171,19 @@ action除了是Object类型，还可以是Function类型，其中dispatch处理O
 
 > 如果createStoee没有第二个参数，可以直接调用，如果写了第二个参数，那需要把原来的第二个参数传参给composeWithDevTools方法
 
-reducers目录下新建index.js，归总所有reducers统一抛出，在store中统一导入，在index.js中需要把所有加工的工作操作完成，所以combineReducers也在index.js中调用
+reducers目录下新建index.js，汇总所有reducers统一抛出，在store中统一导入，在index.js中需要把所有加工的工作操作完成，所以combineReducers也在index.js中调用
 
 
 ### 11_RTK_同步
 
 RTK：redux toolkit，官方推荐的工具集合简化redux的写法，安装：`npm i @reduxjs/toolkit`。
 
+为了简化写法，在RTK中action通常是函数类型而不是对象类型，称为action creator，RTK内部实现给reducer传action对象
+
 整体流程是先创建reducer，在store中引入reducer组合并导出store，在项目根组件注入
 
 1. redux/modules/counterStore
-   - 引入@reduxjs/toolkit的createSlice方法，调用并传参，调用后返回一个reducer函数
+   - 引入@reduxjs/toolkit的createSlice方法，调用并传参，调用后返回一个store函数
    - createSlice配置传参一个Object，
      - name: reducer的名称
      - initialState：初始化state对象
