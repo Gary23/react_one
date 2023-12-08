@@ -5,7 +5,7 @@ import News from '../pages/news'
 import Message from '../pages/message'
 import Detail from '../pages/detail'
 import NotFound from '../pages/notFound'
-import Index from '../pages/index'
+import Index from '../pages/index/index'
 
 const routes = [
   {

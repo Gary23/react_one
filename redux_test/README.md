@@ -178,20 +178,20 @@ reducers目录下新建index.js，汇总所有reducers统一抛出，在store中
 
 RTK：redux toolkit，官方推荐的工具集合简化redux的写法，安装：`npm i @reduxjs/toolkit`。
 
-为了简化写法，在RTK中action通常是函数类型而不是对象类型，称为action creator，RTK内部实现给reducer传action对象
+整体流程：创建具体模块的store对象，从store对象导出reducer函数，在汇总的store对象汇总所有模块的reducer。
 
-整体流程是先创建reducer，在store中引入reducer组合并导出store，在项目根组件注入
-
-1. redux/modules/counterStore
-   - 引入@reduxjs/toolkit的createSlice方法，调用并传参，调用后返回一个store函数
+1. redux/modules/counterStore 
+   - 创建具体模块的store对象，导出所有action creator和reducer函数
+   - 引入@reduxjs/toolkit的createSlice方法，调用并传参，调用后返回一个store对象
    - createSlice配置传参一个Object，
      - name: reducer的名称
      - initialState：初始化state对象
-     - reducers：reducer作用是更新state的状态，在这里创建action方法，可以接收state参数，更新state内的数据。
-   - 从createSlice.actions获取action对象（reducers中定义的action）并导出，方便在组件中调用
-   - 导出createSlice返回的reducer函数，在store中使用
+     - reducers：reducer作用是更新state的状态，可以接收state参数，更新state内的数据。
+   - 获取action creator并导出：createSlice.actions获取action creator对象（简称action对象），也就是createSlice中的reducers，按需引入的方式导出
+   - 导出创建的store对象的reducer函数，在汇总store中使用
 
-2. redux/store
+2. redux/store 
+   - 汇总的store对象，导出注入到项目使用
    - 引入counterStore
    - 引入@reduxjs/toolkit的configureStore方法，调用并传参，返回一个store对象
    - configureStore配置传入一个Object
