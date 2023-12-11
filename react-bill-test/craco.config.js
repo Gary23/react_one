@@ -2,7 +2,7 @@ const path = require('path')
 
 module.exports = {
   webpack: {
-    aliass: {
+    alias: {
       '@': path.resolve(__dirname, 'src')
     }
   }

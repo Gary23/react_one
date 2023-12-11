@@ -31,73 +31,35 @@
   - 在package.json修改start和build命令
   - 根目录创建jsconfig.json增加@别名路径的路径联想
 
-# Getting Started with Create React App
+### 02_月度账单_统计部分UI
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. 创建整个项目页面布局，TabBar的切换
+  - layout组件引入antd-mobile的TabBar组件
+  - 用fixed方式布局
+  - 增加TabBar组件的onChange回调
 
-## Available Scripts
+2. 创建月度账单收支统计部分静态部分
+  - Month组件创建静态页面部分
 
-In the project directory, you can run:
+### 03_月度账单_统计部分逻辑
 
-### `npm start`
+3. 月度账单日期选择框开关、改变箭头
+  - 创建状态控制选择框
+  - 通过状态控制箭头的样式类名
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+4. 选择日期后在页面展示并格式化
+  - 日期组件onConfirm回调记录选择的日期
+  - 用dayjs进行数据格式化
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+5. 后台数据处理
+  - 后台返回的是平铺数据，项目是按照年月筛选，所以把数据根据年月重新分组
+  - 在useMemo钩子监听billList数组，return新数据结构用loadsh的groupBy方法根据date字段分组，用monthList接收return的新数组
+  - useMemo钩子接收两个参数，第一个是函数return出计算后的数据，第二个参数是依赖数组，只要依赖数据变化就更新数据，用变量接收第一个函数的return数据
+  ```js
+  const calcData = useMemo(() => { return list }, ['list'])
+  ```
 
-### `npm test`
+1. 计算选择日期后的统计数据
+  - 创建当前月份数组的状态currentMonthList，每次修改日期后，从monthList中获取到与当前选择月份匹配的数据进行set
+  - 同样用useMemo钩子监听currentMonthList，内部计算数组内的的收入累计、支出累计、结余，用monthData接收这三个数据，在页面中展示
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
