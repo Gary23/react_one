@@ -111,6 +111,27 @@
       "useFor": "drinks",
       "date": "2023-12-12T07:14:28.711Z",
       "id": 23
+    },
+    {
+      "type": "pay",
+      "money": "55",
+      "useFor": "travel",
+      "date": "2023-12-12T07:40:38.782Z",
+      "id": 24
+    },
+    {
+      "type": "pay",
+      "money": "12",
+      "useFor": "taxi",
+      "date": "2023-12-12T07:41:02.360Z",
+      "id": 25
+    },
+    {
+      "type": "pay",
+      "money": "22",
+      "useFor": "dessert",
+      "date": "2023-12-09T16:00:00.000Z",
+      "id": 26
     }
   ]
 }

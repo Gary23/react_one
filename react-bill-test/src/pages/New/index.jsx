@@ -7,6 +7,7 @@ import { billListData } from '@/contants'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { postBillList } from '@/redux/modules/billStore'
+import dayjs from 'dayjs'
 
 const New = () => {
   const navigate = useNavigate()
@@ -14,6 +15,8 @@ const New = () => {
   const [ selectType, setSelectType ] = useState('pay')
   const [ money, setMoney ] = useState('')
   const [ usrFor, setUsrFor ] = useState('')
+  const [ visibleDate, setVisibleDate ] = useState(false)
+  const [ dateValue, setDateValue ] = useState(dayjs())
 
   function handleChange(e) {
     setMoney(e)
@@ -24,9 +27,14 @@ const New = () => {
       type: selectType,
       money: money,
       useFor: usrFor,
-      date: new Date()
+      date: dateValue
     }
     dispatch(postBillList(data))
+  }
+
+  function handleOnConfirm(value) {
+    setDateValue(value)
+    setVisibleDate(false)
   }
 
   return (
@@ -57,11 +65,14 @@ const New = () => {
           <div className="kaForm">
             <div className="date">
               <Icon type="calendar" className="icon" />
-              <span className="text">{'今天'}</span>
+              <span className="text" onClick={() => { setVisibleDate(true) }}>{dayjs(dateValue).format('YYYY-MM-DD')}</span>
               <DatePicker
                 className="kaDate"
                 title="记账日期"
                 max={new Date()}
+                visible={visibleDate}
+                onCancel={ () => { setVisibleDate(false) } }
+                onConfirm={ handleOnConfirm }
               />
             </div>
             <div className="kaInput">
