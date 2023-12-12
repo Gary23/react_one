@@ -1,10 +1,11 @@
 import { NavBar, DatePicker } from 'antd-mobile'
 import { useSelector } from 'react-redux'
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import className from 'classnames'
 import dayjs from 'dayjs'
 import _ from 'loadsh'
 import './index.scss'
+import DailyBill from './components/DailyBill'
 
 const Month = () => {
   const { billList } = useSelector(state => state.bill)
@@ -12,10 +13,21 @@ const Month = () => {
   const [ dateValue, setDateValue ] = useState(dayjs().format('YYYY-MM'))
   const [ currentMonthList, setCurrentMonthList ] = useState([])
 
-  const monthList = useMemo(() => {
+
+
+  const monthGroup = useMemo(() => {
     // billList改变后会重新渲染
     return _.groupBy(billList, (item) => dayjs(item.date).format('YYYY-MM'))
   }, [billList])
+
+  const dayGroupData = useMemo(() => {
+    const dayGroup = _.groupBy(currentMonthList, (item) => dayjs(item.date).format('YYYY-MM-DD'))
+    const dayGroupKeys = Object.keys(dayGroup)
+    return {
+      dayGroup,
+      dayGroupKeys
+    }
+  }, [currentMonthList])
 
   const monthData = useMemo(() => {
     // 收入、支出、结余
@@ -34,14 +46,19 @@ const Month = () => {
     }
   }, [currentMonthList])
 
-  console.log('monthList', monthList);
   function handleDateConfirm(date) {
     // console.log(date)
     const dateValue = dayjs(date).format('YYYY-MM')
     setDateValue(dateValue)
-    setCurrentMonthList(monthList[dateValue] || [])
+    setCurrentMonthList(monthGroup[dateValue] || [])
     setVisibleDate(false)
   }
+
+  useEffect(() => {
+    const nowMonth = dayjs().format('YYYY-MM')
+    setCurrentMonthList(monthGroup[nowMonth] || [])
+  }, [monthGroup])
+  
   return (
     <div className="monthlyBill">
       <NavBar className="nav" backArrow={false}>
@@ -81,8 +98,17 @@ const Month = () => {
             visible={visibleDate}
             max={new Date()}
           />
+
         </div>
+          {
+            dayGroupData.dayGroupKeys.map(item => {
+              return (
+                <DailyBill key={item} date={item} billData={dayGroupData.dayGroup[item]} />
+              )
+            })
+          }
       </div>
+
     </div >
   )
 }
