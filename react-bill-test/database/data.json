@@ -97,6 +97,20 @@
       "date": "2023-12-12T16:00:00.000Z",
       "useFor": "salary",
       "id": 21
+    },
+    {
+      "type": "pay",
+      "money": "101",
+      "useFor": "food",
+      "date": "2023-12-12T07:06:52.969Z",
+      "id": 22
+    },
+    {
+      "type": "pay",
+      "money": "100",
+      "useFor": "drinks",
+      "date": "2023-12-12T07:14:28.711Z",
+      "id": 23
     }
   ]
 }
