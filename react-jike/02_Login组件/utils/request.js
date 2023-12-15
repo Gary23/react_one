@@ -23,21 +23,9 @@ http.interceptors.request.use(function (config) {
 // 添加响应拦截器
 http.interceptors.response.use(function (response) {
   // 对响应数据做点什么
-
-  
-  
   return response;
 }, function (error) {
   // 对响应错误做点什么
-
-  // 在响应拦截监听401，token失效
-  if (error.response.status === 401) {
-    // 清除token
-    storage.remove('token')
-    // 用history跳转到登录页并清理之前的历史记录
-    window.history.pushState(null, null, '/login')
-    window.location.reload()
-  }
   return Promise.reject(error);
 });
 
