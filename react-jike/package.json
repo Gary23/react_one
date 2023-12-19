@@ -22,7 +22,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "craco start",
+    "start": "BROWSER=chrome craco start",
     "build": "craco build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -8,20 +8,10 @@ export const fetchCreeateArticlesApi = (data) => {
   })
 }
 
-export const fetchChannelsApi = () => {
+export const fetchChannelsApi = (data) => {
   return request({
     method: 'GET',
     url: '/channels',
+    data,
   })
-}
-
-export const getArticleListAPI = (params = {}) => {
-  return request({
-    method: 'GET',
-    url: '/mp/articles',
-    params,
-  })
-}
-export const delArticleAPI = (data) => {
-  return {}
 }

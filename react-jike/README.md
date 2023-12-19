@@ -84,16 +84,41 @@
   - 准备Publish组件的样式文件
   - 主要使用antd的表单系列组件、上传组件、react-quill富文本组件
 
-2. 发布文章表单提交
-  - 创建@/apis/article.js文件，抛出发布文章接口的函数fetchCreeateArticlesApi
-  - 安装并引入富文本编辑器react-quill和css，将ReactQuill组件放到内容区域
-  - Publish组件引入fetchCreeateArticlesApi，在表单提交调用，传入页面表单的参数，发布成功重置表单数据
-
-3. 渲染频道列表
+2. 渲染频道列表
   - 在@/apis/article.js文件增加频道列表接口，引入Publish组件调用并渲染到页面
 
-4. 上传封面
+3. 上传封面
   - 增加上传部分的页面结构和样式
   - Upload上传组件增加onChange回调和action上传地址，fileList状态数据
   - 上传完成后赋值fileList，待上传时候上送
+
+4. 切换封面类型
+  - 增加封面模式状态控制，获取到封面类型的值，进行条件渲染，只有有图模式才展示上传Upload组件
+  - 默认无图模式，每次切换类型清空fileList
+  - 获取到图片类型后，可以限制上传数量，Upload组件的maxCount属性，赋值当前选择的封面数量状态
+
+5. 发布文章表单提交
+  - 创建@/apis/article.js文件，抛出发布文章接口的函数fetchCreeateArticlesApi
+  - 安装并引入富文本编辑器react-quill和css，将ReactQuill组件放到内容区域
+  - Publish组件引入fetchCreeateArticlesApi，在表单提交调用，传入页面表单的参数，发布成功重置表单数据
+  - 提交前增加检验，封面类型和实际图片列表数量是否一致
+
+### 05_Article组件
+
+1. 初始化Article组件
+  - 准备Publish组件的结构，使用antd组件
+  - 主要使用antd的Card, Form, DatePicker, Table组件，DatePicker需要引入中文转译文件
+
+2. 渲染频道列表
+  - 创建@/hooks/useChannel
+  - 将Publish组件的获取频道列表逻辑封装为自定义hook，最后抛出一个channels集合
+
+3. 渲染table文章列表
+  - @/apis/article文件创建getArticleListAPI获取文章列表接口函数
+  - 获取列表后赋值列表和总数状态
+  - 根据status的枚举值状态渲染状态要素
+
+4. 筛选功能实现
+  - 创建formData状态对象，赋值默认上送字段，在useEffect钩子监听formData
+  - Form组件绑定onFinish回调函数，获取表单数据处理一下日期区间，给formData赋值
 

@@ -11,11 +11,10 @@ import {
   message
 } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import { Link } from 'react-router-dom'
-import { fetchCreeateArticlesApi } from '@/apis/article'
-import { useChannel } from '@/hooks/useChannel'
+import { fetchCreeateArticlesApi, fetchChannelsApi } from '@/apis/article'
 import 'react-quill/dist/quill.snow.css';
 import './index.scss'
 
@@ -23,9 +22,9 @@ const { Option } = Select
 
 const Publish = () => {
   const [form] = Form.useForm();
+  const [ channels, setChannels ] = useState([])
   const [ fileList, setFileList ] = useState([])
   const [ coverType, setCoverType ] = useState(0)
-  const { channels } = useChannel()
 
   function handleFinish(values) {
     console.log(values);
@@ -67,7 +66,12 @@ const Publish = () => {
     setCoverType(value)
   }
 
-
+  useEffect(() => {
+    fetchChannelsApi().then(res => {
+      console.log(res);
+      setChannels(res.data.data.channels)
+    })
+  }, [])
 
   return (
     <div className="publish">
