@@ -122,3 +122,62 @@
   - 创建formData状态对象，赋值默认上送字段，在useEffect钩子监听formData
   - Form组件绑定onFinish回调函数，获取表单数据处理一下日期区间，给formData赋值
 
+5. 分页功能
+  - 使用Table组件的分页功能，设置pagination对象的pageSize、totle属性onChange回调，手动更改页码后通过修改formData触发数据重新加载
+
+6. 删除功能
+  - 点击删除按钮调用删除回调，传入文章id
+  - 调用接口method设置DELETE，调用方式为：url/文章id
+
+
+
+
+
+编辑文章跳转
+
+点击编辑按钮跳到新增页面携带文章id，
+
+
+
+编辑文章回填
+
+通过id获取文章详情数据，调用useForm，绑定到Form组件，用Form设置value的方法设置接口返回数据
+
+处理cover集合设置封面类型和图片列表
+
+
+
+根据id适配状态
+
+根据id判断遍历文章还是发布文章
+
+
+
+更新文章
+
+编辑文章修改后应该是更新，不是发布
+
+适配体检时候url获取的适配
+
+调用接口不同
+
+
+
+打包和本地预览
+
+配置路由懒加载，不优化的话所有路由会一起加载，在路由表从react引入lazy 
+
+
+
+包体积分析，通过可视化方式体现打包之后的体积，source-map-explorer，script命令 source-map-explorer ＇build/static/is/*.js＇
+
+
+
+CDN优化，由离用户最近服务器将缓存传给浏览器，非业务性代码、体积较大、不需要频道更新，比如react 等，项目中把需要CDN的排除在打包之外，以CDN的方式重新引入
+
+看笔记的webpack配置，排除  引进  保存  index.html中取出后动态插入  
+
+
+
+
+
