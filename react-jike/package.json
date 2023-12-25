@@ -19,10 +19,12 @@
     "react-router-dom": "^6.20.1",
     "react-scripts": "5.0.1",
     "sass": "^1.69.5",
+    "source-map-explorer": "^2.5.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "BROWSER=chrome craco start",
+    "source": "source-map-explorer 'build/static/js/*.js'",
     "build": "craco build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -44,5 +46,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^5.6.0",
+    "webpack": "^5.89.0"
   }
 }

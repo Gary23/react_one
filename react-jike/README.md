@@ -129,53 +129,36 @@
   - 点击删除按钮调用删除回调，传入文章id
   - 调用接口method设置DELETE，调用方式为：url/文章id
 
+### 06_编辑文章
 
+1. 编辑文章跳转
+  - 点击编辑按钮跳到新增页面携带文章id参数
 
+2. 编辑文章回填
+  - apis/article.js中增加获取文章详情接口
+  - 在useEffect钩子中，通过id获取文章详情数据，调用useForm获取到form对象，绑定到Form组件上，用form.setFieldsValue设置表单数据
+  - 封面类型特殊处理，从cover中获取类型，单独设置form的type表单值和coverType的值
+  - 图片列表特殊处理，从cover中获取图片列表，单独设置fileList列表，格式为`[{url: ''}]`
+  - 如果没有获取到id值则为新增，不进行上述操作
 
+3. 更新文章
+  - apis/article.js中增加更新文章接口
+  - cover的images数组组合数据时，根据response有没有增加如何获取url地址
+  - 根据id值调用更新接口还是发布接口
 
-编辑文章跳转
+### 07_打包和本地预览
 
-点击编辑按钮跳到新增页面携带文章id，
+1. 路由懒加载
+  - 如果不优化的话所有路由会一起加载，优化后按需加载
+  - 在路由表配置路由懒加载，在路由表从react引入lazy和Suspense，把Home、Article、Publish组件改为懒加载的方式引入，组件外层嵌套Suspense标签用于展示加载中的样式
 
+2. 包体积分析
+  - 全局安装source-map-explorer，通过可视化方式体现打包之后的体积
+  - 执行命令：`source-map-explorer ＇build/static/js/*.js＇`lk
 
-
-编辑文章回填
-
-通过id获取文章详情数据，调用useForm，绑定到Form组件，用Form设置value的方法设置接口返回数据
-
-处理cover集合设置封面类型和图片列表
-
-
-
-根据id适配状态
-
-根据id判断遍历文章还是发布文章
-
-
-
-更新文章
-
-编辑文章修改后应该是更新，不是发布
-
-适配体检时候url获取的适配
-
-调用接口不同
-
-
-
-打包和本地预览
-
-配置路由懒加载，不优化的话所有路由会一起加载，在路由表从react引入lazy 
-
-
-
-包体积分析，通过可视化方式体现打包之后的体积，source-map-explorer，script命令 source-map-explorer ＇build/static/is/*.js＇
-
-
-
-CDN优化，由离用户最近服务器将缓存传给浏览器，非业务性代码、体积较大、不需要频道更新，比如react 等，项目中把需要CDN的排除在打包之外，以CDN的方式重新引入
-
-看笔记的webpack配置，排除  引进  保存  index.html中取出后动态插入  
+3. CDN优化
+  - 非业务性代码、体积较大、不需要频道更新的js库，不需要打包到代码里，可以用离用户最近服务器将缓存传给浏览器
+  - 这里将react和react-dom优化为CDN加载，项目中把需要CDN的排除在打包之外，以CDN的方式重新引入
 
 
 

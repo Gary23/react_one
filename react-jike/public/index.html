@@ -11,8 +11,12 @@
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <title>React App</title>
+    <!-- <title><% htmlWebpackPlugin %></title> -->
   </head>
   <body>
     <div id="root"></div>
+    <% htmlWebpackPlugin.options.files.js.forEach(cdnURL => { %>
+      <script src="<%= cdnURL %>"></script>
+    <% }) %>
   </body>
 </html>
